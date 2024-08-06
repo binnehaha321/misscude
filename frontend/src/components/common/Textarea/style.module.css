@@ -1,0 +1,14 @@
+.textarea {
+	width: 100%;
+	border: none;
+	background: transparent;
+	resize: none;
+	box-sizing: border-box;
+	font-family: 'Be Vietnam Pro', sans-serif;
+	font-size: 16px;
+}
+
+.textarea:focus-visible {
+	border: none;
+	outline: none;
+}

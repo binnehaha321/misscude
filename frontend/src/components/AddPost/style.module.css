@@ -1,0 +1,23 @@
+/* .addBtn {
+	transition: all 500ms ease-in;
+}
+
+.addBtn::after {
+	content: 'Check in nào 👌';
+	width: 0;
+	opacity: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	transition: all 500ms ease-out;
+}
+
+.addBtn:hover {
+	padding-inline: 8px;
+	width: max-content;
+	border-radius: 10px;
+}
+
+.addBtn:hover::after {
+	opacity: 1;
+	width: 100%;
+} */
