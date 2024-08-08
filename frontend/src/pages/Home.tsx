@@ -12,12 +12,12 @@ const Home = () => {
 	return !loaded ? (
 		<Welcome onSetIsLoaded={setIsLoaded} />
 	) : (
-		<div className='container'>
+		<main>
 			{/* <MainSection /> */}
 			<Checkin />
 			<CheckinForm />
 			<AddPost />
-		</div>
+		</main>
 	)
 }
 

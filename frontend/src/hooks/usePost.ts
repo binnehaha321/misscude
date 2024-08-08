@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 
@@ -48,7 +48,9 @@ export const useNewPost = () => {
 	return { addNewPost, isLoading }
 }
 
-export const useAllPosts = () => {
+export const useAllPosts = (page: number) => {
+	const LIMIT = 10
+	const [slicePost, setSlicePost] = useState<ICheckinData[]>([])
 	const { data, isLoading, error, refetch } = useQuery({
 		queryKey: ['posts'],
 		queryFn: getPosts,
@@ -57,7 +59,22 @@ export const useAllPosts = () => {
 		retry: 3
 	})
 
-	return { isLoading, error, posts: data, refetch }
+	useEffect(() => {
+		if (data && data.length) {
+			const dataLength = data.length
+			const slicePostLength = slicePost.length
+
+			if (dataLength > slicePostLength) {
+				setSlicePost((prevList) => [
+					...prevList,
+					...data.slice(slicePostLength, slicePostLength + LIMIT)
+				])
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data, page])
+
+	return { isLoading, error, posts: slicePost, refetch }
 }
 
 export const useSinglePost = (id: string) => {

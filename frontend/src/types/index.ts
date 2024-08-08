@@ -1,4 +1,7 @@
-import { AlertColor } from '@mui/material'
+import { AlertColor, SvgIconTypeMap } from '@mui/material'
+import { OverridableComponent } from '@mui/material/OverridableComponent'
+
+export type MUIIconProps = OverridableComponent<SvgIconTypeMap<object, 'svg'>>
 
 export type Image = {
 	filename: string
@@ -43,3 +46,8 @@ export type SignUpValueProps = Record<
 	Exclude<ValidateFormKey, 'rePassword'>,
 	string
 >
+
+export interface IMenuItem {
+	text: string
+	icon: MUIIconProps
+}

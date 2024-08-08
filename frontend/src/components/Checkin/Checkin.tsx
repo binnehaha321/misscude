@@ -1,45 +1,70 @@
-import { lazy, Suspense } from 'react'
-import { Stack, Typography } from '@mui/material'
-
+import { lazy, Suspense, useCallback, useRef, useState } from 'react'
+import { Stack } from '@mui/material'
 import { useAllPosts } from '../../hooks/usePost'
+import { SinglePostSkeleton } from '../common/Skeleton'
+import ErrorText from '../common/ErrorText'
 const SinglePost = lazy(() =>
 	import('./SinglePost/SinglePost').catch(() => ({
-		default: () => <p>Không thể tải các post 🥺</p>
+		default: () => <ErrorText text='Không thể tải các post 🥺' />
 	}))
 )
-
 const Checkin = () => {
-	const { posts, isLoading, error } = useAllPosts()
+	const observer = useRef<IntersectionObserver | null>(null)
+	const [page, setPage] = useState(1)
+	const { posts, isLoading, error } = useAllPosts(page)
+
+	const lastPostRef = useCallback(
+		(node: HTMLDivElement) => {
+			if (isLoading) return
+			if (observer.current) observer.current.disconnect()
+			observer.current = new IntersectionObserver(
+				([target]) => {
+					if (target.isIntersecting) {
+						setPage((prevPageNumber) => prevPageNumber + 1)
+					}
+				},
+				{
+					threshold: 1,
+					rootMargin: '300px'
+				}
+			)
+			if (node) {
+				observer.current.observe(node)
+			} else {
+				observer.current.unobserve(node)
+			}
+		},
+		[isLoading]
+	)
 
 	if (isLoading) {
-		return <Typography>Đang tải các chuyến đi...</Typography>
+		return <SinglePostSkeleton />
 	}
 
 	if (error) {
-		return (
-			<Typography>
-				Có lỗi xảy ra khi tải các chuyến đi: {error.message}
-			</Typography>
-		)
+		return <ErrorText text='Có lỗi xảy ra khi tải các chuyến đi' />
 	}
+
 	return (
-		<Stack direction='column'>
-			<Stack
-				bgcolor='#dcdcdc'
-				rowGap={2}
-				py={!posts?.length ? 0 : 2}
-			>
-				{posts?.map((post, index) => (
-					<Suspense
-						fallback={<p>Đang tải các post checkin...</p>}
-						key={index}
-					>
-						<SinglePost {...post} />
-					</Suspense>
-				))}
+		<>
+			<Stack direction='column'>
+				<Stack
+					bgcolor='#dcdcdc'
+					rowGap={2}
+					py={!posts?.length ? 0 : 2}
+				>
+					{posts?.map((post, index) => (
+						<Suspense
+							fallback={<SinglePostSkeleton />}
+							key={index}
+						>
+							<SinglePost {...post} />
+						</Suspense>
+					))}
+				</Stack>
 			</Stack>
-		</Stack>
+			<div ref={lastPostRef} />
+		</>
 	)
 }
-
 export default Checkin

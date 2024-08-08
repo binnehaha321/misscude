@@ -1,5 +1,6 @@
-import Toast from './components/Toast'
 import { useToast } from './context/ToastContext'
+import Toast from './components/Toast'
+import Home from './pages/Home'
 
 function App() {
 	const { toast, closeToast } = useToast()
@@ -12,6 +13,7 @@ function App() {
 				open={toast.isOpen}
 				onClose={closeToast}
 			/>
+			<Home />
 		</>
 	)
 }

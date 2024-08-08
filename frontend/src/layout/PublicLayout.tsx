@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 import { localStore } from '../utils/localStorage'
 
-const PublicLayout = ({ children }: React.PropsWithChildren) => {
+const PublicLayout = () => {
 	const accessToken = localStore.get('accessToken')
 	const navigate = useNavigate()
 
@@ -11,7 +11,7 @@ const PublicLayout = ({ children }: React.PropsWithChildren) => {
 		if (accessToken) navigate('/')
 	}, [accessToken, navigate])
 
-	return children
+	return <Outlet />
 }
 
 export default PublicLayout

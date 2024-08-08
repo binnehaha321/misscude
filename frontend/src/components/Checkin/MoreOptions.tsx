@@ -1,15 +1,16 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Fade, IconButton, Menu, MenuItem, SvgIconTypeMap } from '@mui/material'
-import { OverridableComponent } from '@mui/material/OverridableComponent'
+import { Fade, IconButton, Menu, MenuItem } from '@mui/material'
 import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded'
 import InfoIcon from '@mui/icons-material/Info'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 
+import { MUIIconProps } from '../../types'
+
 interface IMenuItem {
 	text: string
-	icon: OverridableComponent<SvgIconTypeMap<object, 'svg'>>
+	icon: MUIIconProps
 	action: () => void
 }
 
