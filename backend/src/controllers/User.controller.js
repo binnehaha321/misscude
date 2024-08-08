@@ -1,5 +1,8 @@
 const bcrypt = require('bcrypt')
-const { isExistUsername, isExistEmail } = require('../middleware/User.middleware')
+const {
+	isExistUsername,
+	isExistEmail
+} = require('../middleware/User.middleware')
 const UserModel = require('../models/User.model')
 
 const createUser = async (req, res) => {

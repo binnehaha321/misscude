@@ -5,8 +5,7 @@ const setCookie = (res, refreshToken) => {
 		path: '/',
 		httpOnly: true,
 		sameSite: 'strict',
-		// maxAge: 2 * 60 * 60 * 1000, // 2 hour
-		maxAge: 5 * 60 * 1000, // 5 min
+		maxAge: 3 * 60 * 60 * 1000, // 3 hour
 		secure: process.env.NODE_ENV !== 'development'
 	})
 }
