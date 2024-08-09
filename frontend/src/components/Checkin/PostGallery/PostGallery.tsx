@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
+import { lazy, useEffect, useState } from 'react'
 import { Grid } from '@mui/material'
 
 import { Image } from '../../../types'
 import { usePost } from '../../../context/PostContext'
 
-import Figure from '../Figure'
+const Figure = lazy(() => import('../Figure'))
 
 import styles from './style.module.css'
 

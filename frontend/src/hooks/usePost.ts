@@ -48,7 +48,7 @@ export const useNewPost = () => {
 	return { addNewPost, isLoading }
 }
 
-export const useAllPosts = (page: number) => {
+export const useAllPosts = (page: number = 0) => {
 	const LIMIT = 10
 	const [slicePost, setSlicePost] = useState<ICheckinData[]>([])
 	const { data, isLoading, error, refetch } = useQuery({

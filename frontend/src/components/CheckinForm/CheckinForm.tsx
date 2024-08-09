@@ -229,7 +229,7 @@ const CheckinForm = () => {
 				aria-labelledby='new-post-modal'
 				aria-describedby='add-a-new-post'
 				open={isOpenNewPostModal}
-				onClose={(event, reason) => {
+				onClose={(_event, reason) => {
 					if (reason === 'backdropClick' && isLoading) return
 					setOpenNewPostModal(false)
 				}}

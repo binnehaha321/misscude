@@ -1,6 +1,8 @@
 import { lazy, Suspense, useCallback, useRef, useState } from 'react'
 import { Stack } from '@mui/material'
+
 import { useAllPosts } from '../../hooks/usePost'
+
 import { SinglePostSkeleton } from '../common/Skeleton'
 import ErrorText from '../common/ErrorText'
 const SinglePost = lazy(() =>
@@ -8,6 +10,7 @@ const SinglePost = lazy(() =>
 		default: () => <ErrorText text='Không thể tải các post 🥺' />
 	}))
 )
+
 const Checkin = () => {
 	const observer = useRef<IntersectionObserver | null>(null)
 	const [page, setPage] = useState(1)
@@ -30,8 +33,6 @@ const Checkin = () => {
 			)
 			if (node) {
 				observer.current.observe(node)
-			} else {
-				observer.current.unobserve(node)
 			}
 		},
 		[isLoading]

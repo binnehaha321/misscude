@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { LoadingButton } from '@mui/lab'
 import {
 	Box,
@@ -18,7 +18,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import InfoIcon from '@mui/icons-material/Info'
 
 import { ISignUp, SignUpValueProps, ValidateFormKey } from '../../types'
-import { validate, matchedPassword } from '../../utils/validate'
+import { validate } from '../../utils/validate'
 import { useSignup } from '../../hooks/useSignup'
 
 type ShowPasswordType = 'firstTime' | 'reType'

@@ -1,7 +1,7 @@
 const effectParent = 'bg-slate-100 rounded-md motion-safe:animate-pulse'
 const effectChild = 'bg-slate-300 rounded-md motion-safe:animate-pulse'
 
-export const SinglePostSkeleton = () => {
+const SinglePostSkeleton = () => {
 	return (
 		<div
 			className={`flex flex-col gap-y-3 w-full max-w-[680px] p-6 mx-auto ${effectParent}`}
@@ -21,3 +21,5 @@ export const SinglePostSkeleton = () => {
 		</div>
 	)
 }
+
+export { SinglePostSkeleton }

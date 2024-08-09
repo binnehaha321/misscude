@@ -5,8 +5,6 @@ const { USERNAME, EMAIL, PASSWORD } = REGEX
 
 const isEmpty = (value: string) => !value.trim()
 
-export const matchedPassword = (pw: string, rePw: string) => pw === rePw
-
 export const validate = (key: ValidateFormKey, value: string): string => {
 	let error = ''
 
