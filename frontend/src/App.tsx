@@ -1,6 +1,6 @@
 import { useToast } from './context/ToastContext'
 import Toast from './components/Toast'
-import Home from './pages/Home'
+import { Outlet } from 'react-router-dom'
 
 function App() {
 	const { toast, closeToast } = useToast()
@@ -13,7 +13,7 @@ function App() {
 				open={toast.isOpen}
 				onClose={closeToast}
 			/>
-			<Home />
+			<Outlet />
 		</>
 	)
 }
