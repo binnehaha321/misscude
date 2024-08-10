@@ -50,4 +50,5 @@ export type SignUpValueProps = Record<
 export interface IMenuItem {
 	text: string
 	icon: MUIIconProps
+	path: string
 }

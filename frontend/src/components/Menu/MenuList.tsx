@@ -9,6 +9,7 @@ import {
 	ListItemText
 } from '@mui/material'
 import { menuItems } from '../../config/menu.ts'
+import { Link } from 'react-router-dom'
 
 const MenuList = () => {
 	const topItems = useMemo(() => menuItems.slice(0, -1), [])
@@ -26,29 +27,33 @@ const MenuList = () => {
 				{topItems.map((item, index) => {
 					const Icon = item.icon
 					return (
-						<ListItem
+						<Link
+							to={item.path}
 							key={index}
-							disablePadding
 						>
-							<ListItemButton>
-								<ListItemIcon>
-									<Icon />
-								</ListItemIcon>
-								<ListItemText primary={item.text} />
-							</ListItemButton>
-						</ListItem>
+							<ListItem disablePadding>
+								<ListItemButton>
+									<ListItemIcon>
+										<Icon />
+									</ListItemIcon>
+									<ListItemText primary={item.text} />
+								</ListItemButton>
+							</ListItem>
+						</Link>
 					)
 				})}
 			</List>
 			<Divider />
-			<ListItem disablePadding>
-				<ListItemButton>
-					<ListItemIcon>
-						<BottomItemIcon />
-					</ListItemIcon>
-					<ListItemText primary={bottomItems.text} />
-				</ListItemButton>
-			</ListItem>
+			<Link to={bottomItems.path}>
+				<ListItem disablePadding>
+					<ListItemButton>
+						<ListItemIcon>
+							<BottomItemIcon />
+						</ListItemIcon>
+						<ListItemText primary={bottomItems.text} />
+					</ListItemButton>
+				</ListItem>
+			</Link>
 		</Box>
 	)
 }
