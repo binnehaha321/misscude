@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
-import { localStore } from '../utils/localStorage'
+import { localStore } from '@utils/localStorage'
 
 const PublicLayout = () => {
 	const accessToken = localStore.get('accessToken')

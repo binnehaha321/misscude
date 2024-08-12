@@ -1,8 +1,10 @@
-import httpRequest from '../config/httpRequest'
-import { ICheckinData } from '../types'
+import httpRequest from '@config/httpRequest'
+import { ICheckinData } from '@types'
 
-export const getPosts = async () => {
-	const res = await httpRequest(`${import.meta.env.VITE_API_BASE_URL}/post`)
+export const getPosts = async (page: number) => {
+	const res = await httpRequest(
+		`${import.meta.env.VITE_API_BASE_URL}/post?page=${page}`
+	)
 
 	if (res.status !== 200) {
 		throw new Error(`Error ${res.status}: ${res.statusText}`)

@@ -2,7 +2,7 @@ import React, { memo, useMemo } from 'react'
 import { Box, IconButton, Stack } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 
-type Props = {
+interface Props {
 	images: File[]
 	removeFile: (image: File) => void
 	setPreview: React.Dispatch<React.SetStateAction<string | null>>

@@ -2,7 +2,7 @@ import { Button, Stack, Typography } from '@mui/material'
 import FolderOffOutlinedIcon from '@mui/icons-material/FolderOffOutlined'
 import PostAddIcon from '@mui/icons-material/PostAdd'
 
-import { usePost } from '../../context/PostContext'
+import { usePost } from '@context/PostContext'
 
 const NoData = () => {
 	const { openNewPostModal } = usePost()

@@ -15,10 +15,10 @@ import {
 import { LoadingButton } from '@mui/lab'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
-import { IUser } from '../../types'
-import { useSignIn } from '../../hooks/useSignIn'
+import { IUser } from '@types'
+import { useSignIn } from '@hooks/useSignIn'
 
-type ErrorAuth = {
+interface ErrorAuth {
 	name?: 'username' | 'password'
 	text: string
 }
@@ -58,14 +58,18 @@ const SignIn = () => {
 		e.preventDefault()
 
 		if (!value?.username?.trim()) {
-			usernameInputRef?.current && usernameInputRef?.current.focus()
+			if (usernameInputRef?.current) {
+				usernameInputRef?.current.focus()
+			}
 			setError({
 				name: 'username',
 				text: 'Nhập tên tài khoản'
 			})
 			return
 		} else if (!value?.password?.trim()) {
-			passwordInputRef?.current && passwordInputRef?.current.focus()
+			if (passwordInputRef?.current) {
+				passwordInputRef?.current.focus()
+			}
 			setError({
 				name: 'password',
 				text: 'Nhập mật khẩu'

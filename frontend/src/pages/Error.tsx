@@ -2,7 +2,10 @@ import { Box, Stack } from '@mui/material'
 import { useRouteError } from 'react-router-dom'
 
 const Error = () => {
-	const error = useRouteError() as any
+	const error = useRouteError() as {
+		statusText: string
+		message: string
+	}
 
 	return (
 		<Box

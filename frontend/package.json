@@ -6,9 +6,10 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc -b && vite build",
-		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+		"lint": "yarn eslint src",
 		"preview": "vite preview",
-		"format": "yarn prettier . --write"
+		"format": "yarn prettier . --write",
+		"test-and-build": "yarn format && yarn lint && yarn build"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.11.4",
@@ -19,30 +20,33 @@
 		"@mui/lab": "^5.0.0-alpha.171",
 		"@mui/material": "^5.16.0",
 		"@tanstack/react-query": "^5.51.15",
-		"@tanstack/react-query-devtools": "^5.51.15",
 		"axios": "^1.7.3",
 		"emoji-picker-react": "^4.11.1",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"react-router-dom": "^6.24.1",
-		"typewriter-effect": "^2.21.0",
-		"vite-tsconfig-paths": "^4.3.2"
+		"tailwind-merge": "^2.4.0",
+		"typewriter-effect": "^2.21.0"
 	},
 	"devDependencies": {
+		"@tanstack/react-query-devtools": "^5.51.23",
+		"@eslint/js": "^9.9.0",
+		"@types/node": "^22.2.0",
 		"@types/react": "^18.3.3",
 		"@types/react-dom": "^18.3.0",
-		"@types/react-window": "^1.8.8",
 		"@typescript-eslint/eslint-plugin": "^7.13.1",
 		"@typescript-eslint/parser": "^7.13.1",
 		"@vitejs/plugin-react": "^4.3.1",
 		"autoprefixer": "^10.4.20",
-		"eslint": "^8.57.0",
+		"eslint": "^9.9.0",
+		"eslint-plugin-react": "^7.35.0",
 		"eslint-plugin-react-hooks": "^4.6.2",
 		"eslint-plugin-react-refresh": "^0.4.7",
 		"postcss": "^8.4.41",
 		"prettier": "3.3.2",
 		"tailwindcss": "^3.4.7",
-		"typescript": "^5.2.2",
+		"typescript": "^5.5.4",
+		"typescript-eslint": "^8.0.1",
 		"vite": "^5.3.1"
 	}
 }

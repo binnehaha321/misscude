@@ -17,9 +17,9 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import InfoIcon from '@mui/icons-material/Info'
 
-import { ISignUp, SignUpValueProps, ValidateFormKey } from '../../types'
-import { validate } from '../../utils/validate'
-import { useSignup } from '../../hooks/useSignup'
+import { ISignUp, SignUpValueProps, ValidateFormKey } from '@types'
+import { validate } from '@utils/validate'
+import { useSignup } from '@hooks/useSignup'
 
 type ShowPasswordType = 'firstTime' | 'reType'
 type FormKeyValueProps = [ValidateFormKey, string][]

@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-import httpRequest from '../config/httpRequest'
-import { useToast } from '../context/ToastContext'
-import { SignUpValueProps } from '../types'
+import httpRequest from '@config/httpRequest'
+import { useToast } from '@context/ToastContext'
+import { SignUpValueProps } from '@types'
 
 export const useSignup = () => {
 	const navigate = useNavigate()

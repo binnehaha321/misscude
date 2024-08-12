@@ -1,5 +1,5 @@
-import { IUser } from '../types'
-import { localStore } from './localStorage'
+import { IUser } from '@types'
+import { localStore } from './localStorage.js'
 
 export const storeUser = (user: IUser) => {
 	localStore.set('user', user)

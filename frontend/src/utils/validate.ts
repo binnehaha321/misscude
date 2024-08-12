@@ -1,5 +1,5 @@
-import { REGEX } from '../constants'
-import { ValidateFormKey } from '../types'
+import { REGEX } from '@constants'
+import { ValidateFormKey } from '@types'
 
 const { USERNAME, EMAIL, PASSWORD } = REGEX
 

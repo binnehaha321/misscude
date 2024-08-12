@@ -3,7 +3,7 @@ import { OverridableComponent } from '@mui/material/OverridableComponent'
 
 export type MUIIconProps = OverridableComponent<SvgIconTypeMap<object, 'svg'>>
 
-export type Image = {
+export interface Image {
 	filename: string
 	url: string
 	_id: string

@@ -2,7 +2,7 @@ import { Drawer } from '@mui/material'
 
 import MenuList from './MenuList'
 
-type MenuProps = {
+interface MenuProps {
 	onCloseMenu: (open: boolean) => void
 	open: boolean
 }

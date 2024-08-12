@@ -1,15 +1,15 @@
 import { createBrowserRouter } from 'react-router-dom'
 // pages
-import Home from '../pages/Home'
-import Post from '../pages/Post'
-import PostEdit from '../pages/PostEdit'
-import NotFound from '../components/NotFound'
-import SignIn from '../pages/Auth/SignIn'
-import Signup from '../pages/Auth/Signup'
-import Error from '../pages/Error'
+import Home from '@pages/Home'
+import Post from '@pages/Post'
+import PostEdit from '@pages/PostEdit'
+import NotFound from '@components/NotFound'
+import SignIn from '@pages/Auth/SignIn'
+import Signup from '@pages/Auth/Signup'
+import Error from '@pages/Error'
 // layouts
-import ProtectedLayout from '../layout/ProtectedLayout'
-import PublicLayout from '../layout/PublicLayout'
+import ProtectedLayout from '@layout/ProtectedLayout'
+import PublicLayout from '@layout/PublicLayout'
 import App from '../App'
 export const router = createBrowserRouter([
 	{

@@ -3,12 +3,12 @@ export const localStore = {
 		let data = localStorage.getItem(name)
 
 		if (data) {
-			data = JSON.parse(data)
+			data = JSON.parse(data) as string
 			return data
 		}
 	},
 
-	set(name: string, value: any) {
+	set(name: string, value: object | string) {
 		localStorage.setItem(name, JSON.stringify(value))
 	},
 

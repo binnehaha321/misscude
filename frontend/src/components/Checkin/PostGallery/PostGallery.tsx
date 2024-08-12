@@ -1,8 +1,8 @@
 import { lazy, useEffect, useState } from 'react'
 import { Grid } from '@mui/material'
 
-import { Image } from '../../../types'
-import { usePost } from '../../../context/PostContext'
+import { Image } from '@types'
+import { usePost } from '@context/PostContext'
 
 const Figure = lazy(() => import('../Figure'))
 
@@ -11,7 +11,7 @@ import styles from './style.module.css'
 const PostGallery = ({ images }: { images: Image[] }) => {
 	const { openGallery } = usePost()
 
-	const [slicedImgs, setSlicedImgs] = useState<Image[]>([] || images)
+	const [slicedImgs, setSlicedImgs] = useState<Image[]>([])
 	const [restQuantityOfImgs, setRestQuantityOfImgs] = useState(0)
 
 	useEffect(() => {
@@ -42,7 +42,7 @@ const PostGallery = ({ images }: { images: Image[] }) => {
 				container
 			>
 				{(images.length > 4 ? slicedImgs : images).map((src, index) => {
-					const props = src as Image
+					const props = src
 					return (
 						<Grid
 							item

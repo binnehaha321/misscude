@@ -2,7 +2,7 @@ import React, { forwardRef, lazy, Suspense, useState } from 'react'
 import { Box, IconButton } from '@mui/material'
 import SendRoundedIcon from '@mui/icons-material/SendRounded'
 
-const Textarea = lazy(() => import('../../common/Textarea/Textarea'))
+const Textarea = lazy(() => import('@common/Textarea/Textarea'))
 
 type Props = React.ComponentPropsWithRef<'textarea'>
 
@@ -12,10 +12,12 @@ const Comment = forwardRef<HTMLTextAreaElement, Props>((props, ref) => {
 	return (
 		<Box
 			border='1px solid #eee'
-			borderRadius={2}
-			p={1}
+			borderRadius={1}
 			bgcolor='#eee'
 			position='relative'
+			p={1}
+			m={3}
+			mt={0}
 		>
 			<Suspense fallback={<p>Loading...</p>}>
 				<Textarea

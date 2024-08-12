@@ -1,12 +1,12 @@
 import { Box, Fab } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 
-import { usePost } from '../../context/PostContext'
+import { usePost } from '@context/PostContext'
 
 import styles from './style.module.css'
 
 const AddPost = () => {
-	const { isOpenNewPostModal, setOpenNewPostModal } = usePost()
+	const { isOpenNewPostModal, openNewPostModal } = usePost()
 
 	return (
 		<Box
@@ -19,7 +19,7 @@ const AddPost = () => {
 				color='primary'
 				aria-label='add-post'
 				title='Checkin mới'
-				onClick={() => setOpenNewPostModal(!isOpenNewPostModal)}
+				onClick={openNewPostModal}
 				className={styles.addBtn}
 				variant='extended'
 				size='medium'

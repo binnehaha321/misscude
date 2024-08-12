@@ -1,8 +1,9 @@
 import { createContext, useContext, useState } from 'react'
-import { Image } from '../types'
+import { Image } from '@types'
 
 interface IPost {
-	setOpenNewPostModal: React.Dispatch<React.SetStateAction<boolean>>
+	openNewPostModal: () => void
+	closeNewPostModal: () => void
 	isOpenNewPostModal: boolean
 	setOpenPostGallery: React.Dispatch<React.SetStateAction<boolean>>
 	isOpenPostGallery: boolean
@@ -16,15 +17,16 @@ interface IPost {
 
 export const PostContext = createContext<IPost>({
 	isOpenNewPostModal: false,
-	setOpenNewPostModal: () => {},
+	openNewPostModal: () => undefined,
+	closeNewPostModal: () => undefined,
 	isOpenPostGallery: false,
-	setOpenPostGallery: () => {},
+	setOpenPostGallery: () => undefined,
 	crrentImages: [],
-	setCurrentImages: () => {},
+	setCurrentImages: () => undefined,
 	currentIndex: 0,
-	setCurrentIndex: () => {},
-	openGallery: () => {},
-	closeGallery: () => {}
+	setCurrentIndex: () => undefined,
+	openGallery: () => undefined,
+	closeGallery: () => undefined
 })
 
 export const usePost = () => useContext(PostContext)
@@ -45,11 +47,20 @@ export default function PostProvider({ children }: React.PropsWithChildren) {
 		setOpenPostGallery(false)
 	}
 
+	const openNewPostModal = () => {
+		setOpenNewPostModal(true)
+	}
+
+	const closeNewPostModal = () => {
+		setOpenNewPostModal(false)
+	}
+
 	return (
 		<PostContext.Provider
 			value={{
 				isOpenNewPostModal,
-				setOpenNewPostModal,
+				openNewPostModal,
+				closeNewPostModal,
 				isOpenPostGallery,
 				setOpenPostGallery,
 				crrentImages,

@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import { Box } from '@mui/material'
 
-import { Textarea } from '../common/Textarea'
+import { Textarea } from '@common/Textarea'
 
 interface Props extends React.ComponentPropsWithRef<'textarea'> {
 	textareaRef: React.MutableRefObject<HTMLTextAreaElement | null>

@@ -2,11 +2,11 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-import { IUser } from '../types'
-import httpRequest from '../config/httpRequest'
-import { useToast } from '../context/ToastContext'
-import { useAuth } from '../context/AuthContext'
-import { localStore } from '../utils/localStorage'
+import { IUser } from '@types'
+import httpRequest from '@config/httpRequest'
+import { useToast } from '@context/ToastContext'
+import { useAuth } from '@context/AuthContext'
+import { localStore } from '@utils/localStorage'
 
 export const useSignIn = () => {
 	const [data, setData] = useState<Partial<IUser>>({})
@@ -33,7 +33,7 @@ export const useSignIn = () => {
 			} else {
 				const accessToken = res?.data?.accessToken
 				const refreshToken = res?.data?.refreshToken
-				setIsAuth(accessToken, refreshToken)
+				setIsAuth(String(accessToken), String(refreshToken))
 				setData(res?.data as Partial<IUser>)
 
 				// store user to local storage

@@ -1,16 +1,14 @@
 import React, { lazy, Suspense, useRef } from 'react'
 import { Avatar, Box, Paper, Stack, Typography } from '@mui/material'
 
-import { ICheckinData, Image } from '../../../types'
-import { formatDate } from '../../../utils/date'
-import { SinglePostSkeleton } from '../../common/Skeleton'
+import { ICheckinData, Image } from '@types'
+import { formatDate } from '@utils/date'
 
+import { SinglePostSkeleton } from '@common/Skeleton'
+import { CarouselModal } from '@common/CarouselModal'
 const PostGallery = lazy(() => import('../PostGallery/PostGallery'))
 const SubActions = lazy(() => import('./SubActions'))
 const Comment = lazy(() => import('./Comment'))
-const CarouselModal = lazy(
-	() => import('../../common/CarouselModal/CarouselModal')
-)
 const MoreOptions = lazy(() => import('../MoreOptions'))
 
 const SinglePost: React.FC<ICheckinData> = ({
@@ -27,13 +25,15 @@ const SinglePost: React.FC<ICheckinData> = ({
 		<Suspense fallback={<SinglePostSkeleton />}>
 			<Paper
 				elevation={6}
-				sx={{ width: '100%', maxWidth: 680, p: 3, mx: 'auto' }}
+				sx={{ width: '100%', maxWidth: 680, mx: 'auto' }}
 				square={false}
 			>
 				<Stack
 					direction='row'
 					justifyContent='space-between'
 					alignItems='center'
+					p={3}
+					pb={0}
 				>
 					<Stack
 						direction='row'
@@ -51,11 +51,13 @@ const SinglePost: React.FC<ICheckinData> = ({
 							>{`${formatDate(date)} • ${location}`}</Typography>
 						</Stack>
 					</Stack>
-					<MoreOptions postId={_id as string} />
+					<MoreOptions postId={_id!} />
 				</Stack>
 				<Typography
 					variant='h5'
 					lineHeight={2.5}
+					px={3}
+					pb={0}
 				>
 					{title}
 				</Typography>
@@ -63,12 +65,13 @@ const SinglePost: React.FC<ICheckinData> = ({
 					direction='row'
 					columnGap={1}
 					mt={1}
+					bgcolor='#efefef'
 				>
 					<PostGallery images={images as Image[]} />
 				</Stack>
 				<SubActions
 					inputRef={commentRef as React.MutableRefObject<HTMLTextAreaElement>}
-					postId={_id as string}
+					postId={_id!}
 				/>
 				<Comment ref={commentRef} />
 				<CarouselModal />

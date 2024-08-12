@@ -1,10 +1,11 @@
-import { lazy, Suspense, useCallback, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useRef } from 'react'
 import { Stack } from '@mui/material'
 
-import { useAllPosts } from '../../hooks/usePost'
+import { useAllPosts } from '@hooks/usePost'
 
-import { SinglePostSkeleton } from '../common/Skeleton'
-import ErrorText from '../common/ErrorText'
+import { SinglePostSkeleton } from '@common/Skeleton'
+import ErrorText from '@common/ErrorText'
+import NoData from '@common/NoData'
 const SinglePost = lazy(() =>
 	import('./SinglePost/SinglePost').catch(() => ({
 		default: () => <ErrorText text='Không thể tải các post 🥺' />
@@ -13,17 +14,24 @@ const SinglePost = lazy(() =>
 
 const Checkin = () => {
 	const observer = useRef<IntersectionObserver | null>(null)
-	const [page, setPage] = useState(1)
-	const { posts, isLoading, error } = useAllPosts(page)
+	const {
+		posts,
+		isLoading,
+		error,
+		fetchNextPage,
+		hasNextPage,
+		isFetchingNextPage
+	} = useAllPosts()
 
 	const lastPostRef = useCallback(
 		(node: HTMLDivElement) => {
-			if (isLoading) return
+			if (isLoading || isFetchingNextPage) return
 			if (observer.current) observer.current.disconnect()
 			observer.current = new IntersectionObserver(
-				([target]) => {
-					if (target.isIntersecting) {
-						setPage((prevPageNumber) => prevPageNumber + 1)
+				async ([target]) => {
+					if (target.isIntersecting && hasNextPage) {
+						// setPage((prevPageNumber) => prevPageNumber + 1)
+						await fetchNextPage()
 					}
 				},
 				{
@@ -35,7 +43,7 @@ const Checkin = () => {
 				observer.current.observe(node)
 			}
 		},
-		[isLoading]
+		[isLoading, fetchNextPage, hasNextPage, isFetchingNextPage]
 	)
 
 	if (isLoading) {
@@ -46,26 +54,29 @@ const Checkin = () => {
 		return <ErrorText text='Có lỗi xảy ra khi tải các chuyến đi' />
 	}
 
+	if (posts?.length === 0) return <NoData />
+
 	return (
-		<>
-			<Stack direction='column'>
-				<Stack
-					bgcolor='#dcdcdc'
-					rowGap={2}
-					py={!posts?.length ? 0 : 2}
-				>
-					{posts?.map((post, index) => (
-						<Suspense
-							fallback={<SinglePostSkeleton />}
-							key={index}
-						>
-							<SinglePost {...post} />
-						</Suspense>
-					))}
-				</Stack>
+		<div className='min-h-dvh h-full'>
+			<Stack
+				height='100%'
+				minHeight='100dvh'
+				bgcolor='#dcdcdc'
+				rowGap={2}
+				py={!posts?.length ? 0 : 2}
+				direction='column'
+			>
+				{posts?.map((post, index) => (
+					<Suspense
+						fallback={<SinglePostSkeleton />}
+						key={index}
+					>
+						<SinglePost {...post} />
+					</Suspense>
+				))}
 			</Stack>
 			<div ref={lastPostRef} />
-		</>
+		</div>
 	)
 }
 export default Checkin

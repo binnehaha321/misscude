@@ -6,7 +6,7 @@ import InfoIcon from '@mui/icons-material/Info'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 
-import { MUIIconProps } from '../../types'
+import { MUIIconProps } from '@types'
 
 interface IMenuItem {
 	text: string

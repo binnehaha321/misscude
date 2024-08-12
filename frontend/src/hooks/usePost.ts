@@ -1,15 +1,22 @@
-import { useEffect, useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
+import {
+	useInfiniteQuery,
+	useQuery,
+	useQueryClient
+} from '@tanstack/react-query'
 import axios from 'axios'
 
-import { ICheckinData } from '../types'
-import { getPostById, getPosts } from '../helpers/post'
-import httpRequest from '../config/httpRequest'
-import { useToast } from '../context/ToastContext'
+import { ICheckinData } from '@types'
+import { getPostById, getPosts } from '@helpers/post'
+import httpRequest from '@config/httpRequest'
+import { useToast } from '@context/ToastContext'
+import { useScroll } from './useScroll'
 
 export const useNewPost = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const { openToast } = useToast()
+	const { scrollToBottom } = useScroll()
+	const queryClient = useQueryClient()
 
 	const addNewPost = async (postData: FormData) => {
 		setIsLoading(true)
@@ -26,8 +33,13 @@ export const useNewPost = () => {
 			)
 
 			if (res.status === 201) {
-				const response = (await res.data) as ICheckinData
-				return { data: response, status: res.status }
+				const newPost = (await res.data) as ICheckinData
+
+				// clear cache and refetch
+				await queryClient.invalidateQueries({ queryKey: ['posts'] })
+
+				scrollToBottom()
+				return { data: newPost, status: res.status }
 			}
 			openToast({
 				message: 'Có lỗi, vui lòng thử lại',
@@ -48,37 +60,30 @@ export const useNewPost = () => {
 	return { addNewPost, isLoading }
 }
 
-export const useAllPosts = (page: number = 0) => {
-	const LIMIT = 10
-	const [slicePost, setSlicePost] = useState<ICheckinData[]>([])
-	const { data, isLoading, error, refetch } = useQuery({
+export const useAllPosts = () => {
+	const LIMIT = 5
+
+	const { data, ...props } = useInfiniteQuery({
 		queryKey: ['posts'],
-		queryFn: getPosts,
+		initialPageParam: 1,
+		queryFn: ({ pageParam }) => getPosts(pageParam),
+		getNextPageParam: (lastPage, allPages) => {
+			// Determine if there are more pages to load based on the data returned
+			return lastPage.length === LIMIT ? allPages.length + 1 : undefined
+		},
 		staleTime: 10000,
 		retryDelay: 1000,
 		retry: 3
 	})
 
-	useEffect(() => {
-		if (data && data.length) {
-			const dataLength = data.length
-			const slicePostLength = slicePost.length
+	// Flatten the pages data into a single array
+	const posts = data?.pages.flat() ?? []
 
-			if (dataLength > slicePostLength) {
-				setSlicePost((prevList) => [
-					...prevList,
-					...data.slice(slicePostLength, slicePostLength + LIMIT)
-				])
-			}
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data, page])
-
-	return { isLoading, error, posts: slicePost, refetch }
+	return { posts, ...props }
 }
 
 export const useSinglePost = (id: string) => {
-	const { data, isLoading, error, refetch } = useQuery({
+	const { data, ...props } = useQuery({
 		queryKey: ['post', id],
 		queryFn: () => getPostById(id),
 		enabled: !!id,
@@ -87,5 +92,5 @@ export const useSinglePost = (id: string) => {
 		retry: 3
 	})
 
-	return { isLoading, error, post: data, refetch }
+	return { post: data, ...props }
 }

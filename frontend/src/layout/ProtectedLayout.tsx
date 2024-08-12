@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
-import { localStore } from '../utils/localStorage'
-import Navbar from '../components/common/Navbar'
-import Menu from '../components/Menu/Menu'
+import { localStore } from '@utils/localStorage'
+import Navbar from '@components/common/Navbar'
+import Menu from '@components/Menu/Menu'
 
 const ProtectedLayout = () => {
 	const accessToken = localStore.get('accessToken')

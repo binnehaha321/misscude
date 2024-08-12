@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo } from 'react'
 import { Box, Modal, Stack } from '@mui/material'
 
-import { usePost } from '../../../context/PostContext'
+import { usePost } from '@context/PostContext'
 
 import { CloseSlide, NextSlide, PrevSlide } from './CarouselButton'
 

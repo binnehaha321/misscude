@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { localStore } from '../utils/localStorage'
-import { logout } from '../utils/auth'
+import { localStore } from '@utils/localStorage'
+import { logout } from '@utils/auth'
 
 const httpRequest = axios.create({
 	baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -23,7 +23,7 @@ httpRequest.interceptors.request.use(
 	},
 	function (error) {
 		// Do something with request error
-		return Promise.reject(error)
+		return Promise.reject(new Error(JSON.stringify(error)))
 	}
 )
 
@@ -47,8 +47,8 @@ httpRequest.interceptors.response.use(
 				})
 				const { accessToken, refreshToken } = response.data
 
-				localStore.set('accessToken', accessToken)
-				localStore.set('refreshToken', refreshToken)
+				localStore.set('accessToken', String(accessToken))
+				localStore.set('refreshToken', String(refreshToken))
 
 				// Retry the original request with the new token
 				error.config.headers.Authorization = `Bearer ${accessToken}`
@@ -60,7 +60,7 @@ httpRequest.interceptors.response.use(
 			}
 		}
 
-		return Promise.reject(error)
+		return Promise.reject(new Error(JSON.stringify(error)))
 	}
 )
 

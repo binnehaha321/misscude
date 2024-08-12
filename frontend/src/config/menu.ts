@@ -1,6 +1,6 @@
 import { Person, PostAdd, Logout } from '@mui/icons-material'
 
-import { IMenuItem } from '../types'
+import { IMenuItem } from '@types'
 
 export const menuItems: IMenuItem[] = [
 	{

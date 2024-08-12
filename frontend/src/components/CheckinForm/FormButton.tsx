@@ -1,9 +1,9 @@
+import { memo } from 'react'
 import { LoadingButton } from '@mui/lab'
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined'
 import { Button } from '@mui/material'
-import { memo } from 'react'
 
-type Props = {
+interface Props {
 	formStep: number
 	isLoading: boolean
 	onSubmitNewPost: React.MouseEventHandler<HTMLButtonElement> | undefined

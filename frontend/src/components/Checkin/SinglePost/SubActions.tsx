@@ -3,8 +3,8 @@ import { Button, Stack } from '@mui/material'
 import CommentIcon from '@mui/icons-material/Comment'
 import ShareIcon from '@mui/icons-material/Share'
 
-import { copyToClipboard } from '../../../utils/copyToClipboard'
-import { useToast } from '../../../context/ToastContext'
+import { copyToClipboard } from '@utils/copyToClipboard'
+import { useToast } from '@context/ToastContext'
 
 const SubActions = ({
 	inputRef,
@@ -20,10 +20,10 @@ const SubActions = ({
 		inputRef.current.focus()
 	}, [inputRef])
 
-	const sharePost = useCallback(() => {
+	const sharePost = useCallback(async () => {
 		const postLink = `${import.meta.env.VITE_HOSTNAME}/post/${postId}`
 		if (postId) {
-			copyToClipboard(postLink)
+			await copyToClipboard(postLink)
 			openToast({
 				status: 'success',
 				message: 'Đã sao chép liên kết'
@@ -41,6 +41,7 @@ const SubActions = ({
 			borderBottom='1px solid #eee'
 			py={0.5}
 			my={1.5}
+			mx={3}
 		>
 			<Button
 				sx={{ width: '100%' }}

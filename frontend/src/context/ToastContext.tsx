@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react'
-import { IToastContent } from '../types'
+import { IToastContent } from '@types'
 
 interface IToast {
 	toast: IToastContent
@@ -16,9 +16,9 @@ export const ToastContext = createContext<IToast>({
 		status: 'error',
 		isOpen: false
 	},
-	openToast: () => {},
-	resetToast: () => {},
-	closeToast: () => {}
+	openToast: () => undefined,
+	resetToast: () => undefined,
+	closeToast: () => undefined
 })
 
 export default function ToastProvider({ children }: React.PropsWithChildren) {

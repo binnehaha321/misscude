@@ -1,4 +1,4 @@
-import mainCouple from '../../assets/main.png'
+import mainCouple from '@assets/main.svg'
 
 import styles from './style.module.css'
 

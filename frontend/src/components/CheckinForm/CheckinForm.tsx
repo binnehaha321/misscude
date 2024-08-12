@@ -20,12 +20,12 @@ import {
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded'
 import { EmojiClickData } from 'emoji-picker-react'
 
-import { ICheckinData, IUser } from '../../types'
-import { useAllPosts, useNewPost } from '../../hooks/usePost'
-import { usePost } from '../../context/PostContext'
-import { useToast } from '../../context/ToastContext'
-import { useAuth } from '../../context/AuthContext'
-import { getUser } from '../../utils/auth'
+import { ICheckinData, IUser } from '@types'
+import { useNewPost } from '@hooks/usePost'
+import { usePost } from '@context/PostContext'
+import { useToast } from '@context/ToastContext'
+import { useAuth } from '@context/AuthContext'
+import { getUser } from '@utils/auth'
 
 const TitleSection = lazy(() => import('./Title'))
 const LocationSection = lazy(() => import('./Location'))
@@ -74,8 +74,7 @@ const CheckinForm = () => {
 	const [preview, setPreview] = useState<string | null>('')
 
 	const { addNewPost, isLoading } = useNewPost()
-	const { refetch } = useAllPosts()
-	const { setOpenNewPostModal, isOpenNewPostModal } = usePost()
+	const { closeNewPostModal, isOpenNewPostModal } = usePost()
 	const { openToast } = useToast()
 	const { token } = useAuth()
 	const user = useMemo(() => {
@@ -132,7 +131,7 @@ const CheckinForm = () => {
 			const { name, value } = e.currentTarget
 			const files = uploadRef?.current?.files
 			if (files && name === 'images') {
-				const fileArray = [...files].map((file) => {
+				const fileArray = Array.from(files).map((file) => {
 					formData?.current.append(
 						'images',
 						file,
@@ -179,7 +178,7 @@ const CheckinForm = () => {
 		setFormStep(1)
 		setImages([])
 	}
-
+	// submit form
 	const submitNewPost = useCallback(async () => {
 		formData?.current.append('title', checkinData?.title)
 		formData?.current.append('location', checkinData?.location)
@@ -188,13 +187,13 @@ const CheckinForm = () => {
 
 		const res = await addNewPost(formData.current)
 		if (res?.status === 201) {
-			setOpenNewPostModal(false)
+			closeNewPostModal()
 			openToast({ message: 'Đã post bài mới!', status: 'success' })
 
 			resetForm()
-			refetch()
 		}
-	}, [addNewPost, checkinData, setOpenNewPostModal, openToast, refetch])
+		formData.current.forEach((_, key) => formData.current.delete(key))
+	}, [addNewPost, checkinData, closeNewPostModal, openToast])
 
 	const removeFile = useCallback((file: File) => {
 		setImages((prevImages) => {
@@ -231,7 +230,7 @@ const CheckinForm = () => {
 				open={isOpenNewPostModal}
 				onClose={(_event, reason) => {
 					if (reason === 'backdropClick' && isLoading) return
-					setOpenNewPostModal(false)
+					closeNewPostModal()
 				}}
 				closeAfterTransition
 				slots={{ backdrop: Backdrop }}

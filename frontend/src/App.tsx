@@ -1,6 +1,6 @@
-import { useToast } from './context/ToastContext'
-import Toast from './components/Toast'
 import { Outlet } from 'react-router-dom'
+import { useToast } from '@context/ToastContext'
+import Toast from '@components/Toast'
 
 function App() {
 	const { toast, closeToast } = useToast()
