@@ -59,8 +59,13 @@ const createPost = async (req, res) => {
 }
 
 const getPosts = async (req, res) => {
+	const LIMIT = 5
+	const { page = 1 } = req.query
 	try {
-		const posts = await PostModel.find().sort({ updatedAt: -1 })
+		const posts = await PostModel.find()
+			.limit(LIMIT)
+			.skip((+page - 1) * LIMIT)
+			.sort({ date: -1, updatedAt: -1 })
 		return res.status(200).json(posts)
 	} catch (err) {
 		return res.status(500).json({ message: err.message })
