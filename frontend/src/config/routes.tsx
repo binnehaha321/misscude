@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
+
 // pages
 import Home from '@pages/Home'
 import Post from '@pages/Post'
@@ -7,6 +8,9 @@ import NotFound from '@components/NotFound'
 import SignIn from '@pages/Auth/SignIn'
 import Signup from '@pages/Auth/Signup'
 import Error from '@pages/Error'
+import Logout from '@pages/Logout'
+import PostDelete from '@pages/PostDelete'
+
 // layouts
 import ProtectedLayout from '@layout/ProtectedLayout'
 import PublicLayout from '@layout/PublicLayout'
@@ -22,7 +26,9 @@ export const router = createBrowserRouter([
 				children: [
 					{ path: '/', index: true, element: <Home /> },
 					{ path: 'post/:id', element: <Post /> },
-					{ path: 'post/:id/edit', element: <PostEdit /> }
+					{ path: 'post/:id/edit', element: <PostEdit /> },
+					{ path: 'post/:id/delete', element: <PostDelete /> },
+					{ path: 'logout', element: <Logout /> }
 				]
 			},
 			{

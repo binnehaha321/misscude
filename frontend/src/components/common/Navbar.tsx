@@ -24,10 +24,10 @@ const Navbar = ({
 			color='default'
 			enableColorOnDark
 		>
-			<Toolbar>
+			<Toolbar sx={{ justifyContent: 'space-between' }}>
 				<IconButton
 					size='large'
-					edge='start'
+					edge='end'
 					color='inherit'
 					aria-label='menu'
 					sx={{ mr: 2 }}
@@ -47,10 +47,9 @@ const Navbar = ({
 						<AccountCircle />
 					</IconButton>
 					<Menu
-						id='menu-appbar'
 						anchorEl={anchorEl}
 						anchorOrigin={{
-							vertical: 'top',
+							vertical: 'bottom',
 							horizontal: 'right'
 						}}
 						keepMounted

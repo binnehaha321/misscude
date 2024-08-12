@@ -10,12 +10,13 @@ import { ICheckinData } from '@types'
 import { getPostById, getPosts } from '@helpers/post'
 import httpRequest from '@config/httpRequest'
 import { useToast } from '@context/ToastContext'
+import { useAuth } from '@context/AuthContext'
 import { useScroll } from './useScroll'
 
 export const useNewPost = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const { openToast } = useToast()
-	const { scrollToBottom } = useScroll()
+	const { scrollToTop } = useScroll()
 	const queryClient = useQueryClient()
 
 	const addNewPost = async (postData: FormData) => {
@@ -38,7 +39,7 @@ export const useNewPost = () => {
 				// clear cache and refetch
 				await queryClient.invalidateQueries({ queryKey: ['posts'] })
 
-				scrollToBottom()
+				scrollToTop()
 				return { data: newPost, status: res.status }
 			}
 			openToast({
@@ -62,6 +63,7 @@ export const useNewPost = () => {
 
 export const useAllPosts = () => {
 	const LIMIT = 5
+	const { token } = useAuth()
 
 	const { data, ...props } = useInfiniteQuery({
 		queryKey: ['posts'],
@@ -73,7 +75,8 @@ export const useAllPosts = () => {
 		},
 		staleTime: 10000,
 		retryDelay: 1000,
-		retry: 3
+		retry: 3,
+		enabled: !!token
 	})
 
 	// Flatten the pages data into a single array
@@ -83,14 +86,58 @@ export const useAllPosts = () => {
 }
 
 export const useSinglePost = (id: string) => {
+	const { token } = useAuth()
 	const { data, ...props } = useQuery({
 		queryKey: ['post', id],
 		queryFn: () => getPostById(id),
-		enabled: !!id,
+		enabled: !!id || !!token,
 		staleTime: 10000,
 		retryDelay: 1000,
 		retry: 3
 	})
 
 	return { post: data, ...props }
+}
+
+export const useDeletePost = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const { openToast } = useToast()
+	const queryClient = useQueryClient()
+
+	const deletePost = async (id: string) => {
+		setIsLoading(true)
+		try {
+			const res = await httpRequest.delete(
+				`${import.meta.env.VITE_API_BASE_URL}/post/${id}`
+			)
+
+			if (res.status === 200) {
+				const deletedPost = await res.data
+				console.log(deletePost)
+
+				// clear cache and refetch
+				await queryClient.invalidateQueries({ queryKey: ['posts'] })
+				openToast({ message: deletedPost?.data?.message, status: 'success' })
+				return { data: deletedPost, status: res.status }
+			}
+			openToast({
+				message: 'Có lỗi, vui lòng thử lại',
+				status: 'error'
+			})
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				openToast({
+					message: error?.response?.data?.message || 'Lỗi không xác định',
+					status: 'error'
+				})
+			}
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		deletePost
+	}
 }

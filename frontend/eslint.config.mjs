@@ -10,7 +10,7 @@ export default tseslint.config(
 	{
 		languageOptions: {
 			parserOptions: {
-				projectService: true,
+				project: true,
 				tsconfigRootDir: import.meta.dirname
 			}
 		}
@@ -30,7 +30,8 @@ export default tseslint.config(
 			'@typescript-eslint/no-unsafe-call': 0,
 			'@typescript-eslint/no-explicit-any': 0,
 			'@typescript-eslint/no-unnecessary-type-assertion': 0,
-			'@typescript-eslint/no-unsafe-return': 0
+			'@typescript-eslint/no-unsafe-return': 0,
+			'@typescript-eslint/prefer-promise-reject-errors': 0,
 		}
 	}
 )

@@ -26,31 +26,18 @@ import { usePost } from '@context/PostContext'
 import { useToast } from '@context/ToastContext'
 import { useAuth } from '@context/AuthContext'
 import { getUser } from '@utils/auth'
+import { boxStyle } from '@config/boxStyle'
 
 const TitleSection = lazy(() => import('./Title'))
 const LocationSection = lazy(() => import('./Location'))
 const DateSection = lazy(() => import('./Date'))
 const SupportTitle = lazy(() => import('./SupportTitle'))
 const UploadImages = lazy(() => import('./UploadImages'))
+const FormButton = lazy(() => import('./FormButton'))
 const PreviewModal = lazy(() => import('../Preview/PreviewModal'))
 const Preview = lazy(() => import('../Preview/Preview'))
-const FormButton = lazy(() => import('./FormButton'))
 
 import styles from './style.module.css'
-
-const style = {
-	position: 'absolute',
-	top: '50%',
-	left: '50%',
-	transform: 'translate(-50%, -50%)',
-	width: '80dvw',
-	maxWidth: 600,
-	bgcolor: 'background.paper',
-	border: '2px solid #000',
-	boxShadow: 24,
-	p: 4,
-	boxSizing: 'border-box'
-}
 
 const initialCheckinDataValues = {
 	title: '',
@@ -177,23 +164,12 @@ const CheckinForm = () => {
 		setCheckinData(initialCheckinDataValues)
 		setFormStep(1)
 		setImages([])
+		formData?.current.delete('title')
+		formData?.current.delete('location')
+		formData?.current.delete('date')
+		formData?.current.delete('createdBy')
+		formData?.current.delete('images')
 	}
-	// submit form
-	const submitNewPost = useCallback(async () => {
-		formData?.current.append('title', checkinData?.title)
-		formData?.current.append('location', checkinData?.location)
-		formData?.current.append('date', checkinData?.date)
-		formData?.current.append('createdBy', checkinData?.createdBy)
-
-		const res = await addNewPost(formData.current)
-		if (res?.status === 201) {
-			closeNewPostModal()
-			openToast({ message: 'Đã post bài mới!', status: 'success' })
-
-			resetForm()
-		}
-		formData.current.forEach((_, key) => formData.current.delete(key))
-	}, [addNewPost, checkinData, closeNewPostModal, openToast])
 
 	const removeFile = useCallback((file: File) => {
 		setImages((prevImages) => {
@@ -210,6 +186,21 @@ const CheckinForm = () => {
 			return updatedImages
 		})
 	}, [])
+
+	// submit form
+	const submitNewPost = useCallback(async () => {
+		formData?.current.append('title', checkinData?.title)
+		formData?.current.append('location', checkinData?.location)
+		formData?.current.append('date', checkinData?.date)
+		formData?.current.append('createdBy', checkinData?.createdBy)
+
+		const res = await addNewPost(formData.current)
+		if (res?.status === 201) {
+			closeNewPostModal()
+			openToast({ message: 'Đã post bài mới!', status: 'success' })
+		}
+		resetForm()
+	}, [addNewPost, checkinData, closeNewPostModal, openToast])
 
 	// side effect
 	useEffect(() => {
@@ -247,7 +238,7 @@ const CheckinForm = () => {
 						onEntered={() => textareaRef?.current?.focus()}
 					>
 						<Box
-							sx={style}
+							sx={boxStyle}
 							position='relative'
 						>
 							<Suspense fallback={<p>Chờ tui xíu... 😅</p>}>

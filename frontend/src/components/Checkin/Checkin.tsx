@@ -30,7 +30,6 @@ const Checkin = () => {
 			observer.current = new IntersectionObserver(
 				async ([target]) => {
 					if (target.isIntersecting && hasNextPage) {
-						// setPage((prevPageNumber) => prevPageNumber + 1)
 						await fetchNextPage()
 					}
 				},
@@ -54,7 +53,7 @@ const Checkin = () => {
 		return <ErrorText text='Có lỗi xảy ra khi tải các chuyến đi' />
 	}
 
-	if (posts?.length === 0) return <NoData />
+	if (!posts?.length) return <NoData />
 
 	return (
 		<div className='min-h-dvh h-full'>

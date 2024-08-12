@@ -23,7 +23,7 @@ httpRequest.interceptors.request.use(
 	},
 	function (error) {
 		// Do something with request error
-		return Promise.reject(new Error(JSON.stringify(error)))
+		return Promise.reject(error)
 	}
 )
 
@@ -34,10 +34,6 @@ httpRequest.interceptors.response.use(
 		const errorStatus = error.response.status
 		const originalRequest = error.config
 		const rfToken = localStore.get('refreshToken')
-
-		// if ([401, 404, 407].includes(errorStatus)) {
-		// 	logout()
-		// }
 
 		if (errorStatus === 403 && !originalRequest._retry) {
 			originalRequest._retry = true // Mark the request as retried to avoid infinite loops
@@ -60,7 +56,7 @@ httpRequest.interceptors.response.use(
 			}
 		}
 
-		return Promise.reject(new Error(JSON.stringify(error)))
+		return Promise.reject(error)
 	}
 )
 
