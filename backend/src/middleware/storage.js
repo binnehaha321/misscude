@@ -12,7 +12,7 @@ const upload = multer({
 	// limits: {
 	// 	fileSize: 2 * 1024 * 1024 // 2 MB
 	// }
-}).array('images', 15)
+}).array('images', process.env.MAX_FILE_COUNT)
 
 module.exports = {
 	upload

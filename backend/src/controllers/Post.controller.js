@@ -2,6 +2,7 @@ const multer = require('multer')
 const cloudinary = require('../config/cloudinary')
 const PostModel = require('../models/Post.model')
 const { upload } = require('../middleware/storage')
+const { getPublicId } = require('../lib/utils')
 
 const createPost = async (req, res) => {
 	upload(req, res, async (err) => {
@@ -9,7 +10,10 @@ const createPost = async (req, res) => {
 			if (err.code === 'LIMIT_UNEXPECTED_FILE') {
 				return res
 					.status(400)
-					.json({ text: 'Một post chứa tối đa 15 ảnh', status: 400 })
+					.json({
+						text: `Một post chứa tối đa ${process.env.MAX_FILE_COUNT} ảnh`,
+						status: 400
+					})
 			}
 
 			return res
@@ -112,15 +116,27 @@ const deletePost = async (req, res) => {
 	const { id } = req.params
 
 	try {
-		const deletedPost = await PostModel.findByIdAndDelete(id)
+		const selectedPost = await PostModel.findById(id)
 
-		if (!deletedPost) {
-			return res.status(404).json({ message: 'Post not found' })
+		if (!selectedPost) {
+			return res
+				.status(404)
+				.json({ message: 'Không tìm thấy post', status: 404 })
 		}
 
-		return res.status(200).json({ message: 'Post deleted successfully' })
+		// Delete files in cloudinary
+		for (const img of selectedPost.images) {
+			const publicId = `${process.env.CLOUDINARY_ASSET_FOLDER}/${getPublicId(img.url)}`
+			const { result } = await cloudinary.uploader.destroy(publicId)
+			if (result === 'ok') {
+				// Delete the post after all images are deleted
+				await PostModel.findByIdAndDelete(id)
+			}
+		}
+
+		return res.status(200).json({ message: 'Đã xóa post', status: 200 })
 	} catch (err) {
-		return res.status(500).json({ message: err.message })
+		return res.status(500).json({ message: err.message, status: 500 })
 	}
 }
 
