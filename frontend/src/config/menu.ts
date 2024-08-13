@@ -1,17 +1,22 @@
-import { Person, PostAdd, Logout } from '@mui/icons-material'
+import { Home, PostAdd, ThumbUp, Draw } from '@mui/icons-material'
 
 import { IMenuItem } from '@types'
 
 export const menuItems: IMenuItem[] = [
 	{
-		text: 'Thông tin cá nhân',
-		icon: Person,
-		path: '/me'
+		text: 'Trang chủ',
+		icon: Home,
+		path: '/'
 	},
 	{
 		text: 'Bài đăng của tui',
 		icon: PostAdd,
 		path: '/me/posts'
 	},
-	{ text: 'Đăng xuất', icon: Logout, path: '/logout' }
+	{
+		text: 'Yêu thích',
+		icon: ThumbUp,
+		path: '/me/favorites'
+	},
+	{ text: 'Custome ảnh', icon: Draw, path: '' }
 ]

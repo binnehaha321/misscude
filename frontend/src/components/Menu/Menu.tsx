@@ -1,17 +1,15 @@
 import { Drawer } from '@mui/material'
 
+import { useApp } from '@context/AppContext'
 import MenuList from './MenuList'
 
-interface MenuProps {
-	onCloseMenu: (open: boolean) => void
-	open: boolean
-}
+const Menu = () => {
+	const { isSidebarOpen, closeSidebar } = useApp()
 
-const Menu: React.FC<MenuProps> = ({ open, onCloseMenu }) => {
 	return (
 		<Drawer
-			open={open}
-			onClose={onCloseMenu}
+			open={isSidebarOpen}
+			onClose={closeSidebar}
 		>
 			<MenuList />
 		</Drawer>

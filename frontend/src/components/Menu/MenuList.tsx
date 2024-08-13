@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import {
 	Box,
 	Divider,
@@ -8,8 +9,9 @@ import {
 	ListItemIcon,
 	ListItemText
 } from '@mui/material'
-import { menuItems } from '../../config/menu.ts'
-import { Link } from 'react-router-dom'
+
+import { menuItems } from '@config/menu.ts'
+import { useApp } from '@context/AppContext.tsx'
 
 const MenuList = () => {
 	const topItems = useMemo(() => menuItems.slice(0, -1), [])
@@ -17,6 +19,7 @@ const MenuList = () => {
 	const BottomItemIcon = useMemo(() => {
 		return bottomItems.icon
 	}, [bottomItems.icon])
+	const { closeSidebar } = useApp()
 
 	return (
 		<Box
@@ -30,6 +33,7 @@ const MenuList = () => {
 						<Link
 							to={item.path}
 							key={index}
+							onClick={closeSidebar}
 						>
 							<ListItem disablePadding>
 								<ListItemButton>

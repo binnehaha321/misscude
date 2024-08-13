@@ -13,8 +13,9 @@ import PostDelete from '@pages/PostDelete'
 
 // layouts
 import ProtectedLayout from '@layout/ProtectedLayout'
-import PublicLayout from '@layout/PublicLayout'
+// import PublicLayout from '@layout/PublicLayout'
 import App from '../App'
+import AuthenLayout from '@layout/AuthenLayout'
 export const router = createBrowserRouter([
 	{
 		path: '/',
@@ -32,7 +33,7 @@ export const router = createBrowserRouter([
 				]
 			},
 			{
-				element: <PublicLayout />,
+				element: <AuthenLayout />,
 				children: [
 					{ path: 'sign-in', element: <SignIn /> },
 					{ path: 'sign-up', element: <Signup /> }

@@ -1,7 +1,10 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { AppBar, IconButton, Menu, MenuItem, Toolbar } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { AccountCircle } from '@mui/icons-material'
+
+import { logout } from '@utils/auth'
 
 const Navbar = ({
 	toggleOpenMenu
@@ -23,6 +26,7 @@ const Navbar = ({
 			position='sticky'
 			color='default'
 			enableColorOnDark
+			sx={{ zIndex: 5 }}
 		>
 			<Toolbar sx={{ justifyContent: 'space-between' }}>
 				<IconButton
@@ -60,8 +64,10 @@ const Navbar = ({
 						open={Boolean(anchorEl)}
 						onClose={handleClose}
 					>
-						<MenuItem onClick={handleClose}>Profile</MenuItem>
-						<MenuItem onClick={handleClose}>My account</MenuItem>
+						<MenuItem onClick={handleClose}>
+							<Link to='/me'>Thông tin cá nhân</Link>
+						</MenuItem>
+						<MenuItem onClick={logout}>Đăng xuất</MenuItem>
 					</Menu>
 				</div>
 			</Toolbar>
