@@ -11,6 +11,7 @@ import { router } from '@config/routes.tsx'
 import PostProvider from '@context/PostContext.tsx'
 import ToastProvider from '@context/ToastContext.tsx'
 import AuthProvider from '@context/AuthContext.tsx'
+import AppProvider from '@context/AppContext'
 
 import '@fontsource/be-vietnam-pro/300.css'
 import '@fontsource/be-vietnam-pro/400.css'
@@ -24,13 +25,15 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
 			<ThemeProvider theme={theme}>
-				<AuthProvider>
-					<ToastProvider>
-						<PostProvider>
-							<RouterProvider router={router} />
-						</PostProvider>
-					</ToastProvider>
-				</AuthProvider>
+				<AppProvider>
+					<AuthProvider>
+						<ToastProvider>
+							<PostProvider>
+								<RouterProvider router={router} />
+							</PostProvider>
+						</ToastProvider>
+					</AuthProvider>
+				</AppProvider>
 			</ThemeProvider>
 			<ReactQueryDevtools initialIsOpen={false} />
 		</QueryClientProvider>
