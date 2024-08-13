@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react'
 import { Image } from '@types'
 
-interface IPost {
+interface IPostContext {
 	openNewPostModal: () => void
 	closeNewPostModal: () => void
 	isOpenNewPostModal: boolean
@@ -15,7 +15,7 @@ interface IPost {
 	closeGallery: () => void
 }
 
-export const PostContext = createContext<IPost>({
+export const PostContext = createContext<IPostContext>({
 	isOpenNewPostModal: false,
 	openNewPostModal: () => undefined,
 	closeNewPostModal: () => undefined,

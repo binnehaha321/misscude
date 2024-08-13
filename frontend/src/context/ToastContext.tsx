@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react'
 import { IToastContent } from '@types'
 
-interface IToast {
+interface IToastContext {
 	toast: IToastContent
 	openToast: ({ message, status }: Omit<IToastContent, 'isOpen'>) => void
 	resetToast: () => void
@@ -10,7 +10,7 @@ interface IToast {
 
 export const useToast = () => useContext(ToastContext)
 
-export const ToastContext = createContext<IToast>({
+export const ToastContext = createContext<IToastContext>({
 	toast: {
 		message: '',
 		status: 'error',

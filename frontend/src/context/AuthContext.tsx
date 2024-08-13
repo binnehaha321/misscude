@@ -1,12 +1,12 @@
 import { createContext, useContext, useMemo, useState } from 'react'
 import { localStore } from '@utils/localStorage'
 
-interface IAuth {
+interface IAuthContext {
 	token: string
 	setIsAuth: (token: string, refreshToken: string) => void
 }
 
-export const AuthContext = createContext<IAuth>({
+export const AuthContext = createContext<IAuthContext>({
 	token: '',
 	setIsAuth: () => undefined
 })
