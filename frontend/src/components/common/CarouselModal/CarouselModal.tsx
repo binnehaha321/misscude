@@ -79,18 +79,46 @@ const CarouselModal = () => {
 					position='absolute'
 					top='50%'
 					left='50%'
-					sx={{ outline: 'none', transform: 'translate(-50%, -50%)' }}
-					width='80dvw'
-					height='80dvh'
+					sx={{
+						outline: 'none',
+						transform: 'translate(-50%, -50%)',
+						width: { xs: '100%', md: 'auto' }
+					}}
 				>
 					<img
 						src={crrentImages[currentIndex]?.url}
 						alt={crrentImages[currentIndex]?.filename}
 						loading='lazy'
 						style={{ objectFit: 'contain' }}
-						width='100%'
-						height='100%'
 					/>
+					{crrentImages.length > 1 && (
+						<>
+							<PrevSlide
+								position='absolute'
+								top='50%'
+								left={0}
+								sx={{
+									transform: {
+										xs: 'translate(0, -50%)',
+										md: 'translate(-50%,-50%)'
+									}
+								}}
+								onClick={prevSlide}
+							/>
+							<NextSlide
+								position='absolute'
+								top='50%'
+								right={0}
+								sx={{
+									transform: {
+										xs: 'translate(0, -50%)',
+										md: 'translate(50%,-50%)'
+									}
+								}}
+								onClick={nextSlide}
+							/>
+						</>
+					)}
 				</Stack>
 				<CloseSlide
 					position='absolute'
@@ -98,24 +126,6 @@ const CarouselModal = () => {
 					right='0%'
 					onClick={closeGallery}
 				/>
-				{crrentImages.length > 1 && (
-					<>
-						<PrevSlide
-							position='absolute'
-							top='50%'
-							left='5%'
-							sx={{ transform: 'translateY(-50%)' }}
-							onClick={prevSlide}
-						/>
-						<NextSlide
-							position='absolute'
-							top='50%'
-							right='5%'
-							sx={{ transform: 'translateY(-50%)' }}
-							onClick={nextSlide}
-						/>
-					</>
-				)}
 			</Box>
 		</Modal>
 	)

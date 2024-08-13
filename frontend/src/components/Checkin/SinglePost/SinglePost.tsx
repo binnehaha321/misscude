@@ -1,10 +1,9 @@
-import React, { lazy, Suspense, useRef } from 'react'
+import React, { lazy, useRef } from 'react'
 import { Avatar, Box, Paper, Stack, Typography } from '@mui/material'
 
 import { ICheckinData, Image } from '@types'
 import { formatDate } from '@utils/date'
 
-import { SinglePostSkeleton } from '@common/Skeleton'
 import { CarouselModal } from '@common/CarouselModal'
 const PostGallery = lazy(() => import('../PostGallery/PostGallery'))
 const SubActions = lazy(() => import('./SubActions'))
@@ -22,61 +21,70 @@ const SinglePost: React.FC<ICheckinData> = ({
 	const commentRef = useRef<HTMLTextAreaElement | null>(null)
 
 	return (
-		<Suspense fallback={<SinglePostSkeleton />}>
-			<Paper
-				elevation={6}
-				sx={{ width: '100%', maxWidth: 680, mx: 'auto' }}
-				square={false}
+		<Paper
+			elevation={6}
+			sx={{
+				width: '100%',
+				maxWidth: 680,
+				mx: 'auto',
+				display: 'flex',
+				flexDirection: 'column'
+			}}
+			square={false}
+		>
+			<Stack
+				pb={0}
+				sx={{
+					flexDirection: 'row',
+					justifyContent: 'space-between',
+					alignItems: 'center',
+					margin: { xs: 1, sm: 2 },
+					mb: 0
+				}}
 			>
 				<Stack
 					direction='row'
-					justifyContent='space-between'
+					gap={1}
 					alignItems='center'
-					p={3}
-					pb={0}
 				>
-					<Stack
-						direction='row'
-						gap={1}
-						alignItems='center'
-					>
-						<Box>
-							<Avatar>{createdBy.slice(0, 1).toUpperCase()}</Avatar>
-						</Box>
-						<Stack direction='column'>
-							<Typography variant='h6'>{createdBy}</Typography>
-							<Typography
-								variant='body2'
-								color='#aaa'
-							>{`${formatDate(date)} • ${location}`}</Typography>
-						</Stack>
+					<Box>
+						<Avatar>{createdBy.slice(0, 1).toUpperCase()}</Avatar>
+					</Box>
+					<Stack direction='column'>
+						<Typography variant='h6'>{createdBy}</Typography>
+						<Typography
+							variant='body2'
+							color='#aaa'
+						>{`${formatDate(date)} • ${location}`}</Typography>
 					</Stack>
-					<MoreOptions postId={_id!} />
 				</Stack>
-				<Typography
-					variant='h5'
-					lineHeight={2.5}
-					px={3}
-					pb={0}
-				>
-					{title}
-				</Typography>
-				<Stack
-					direction='row'
-					columnGap={1}
-					mt={1}
-					bgcolor='#efefef'
-				>
-					<PostGallery images={images as Image[]} />
-				</Stack>
-				<SubActions
-					inputRef={commentRef as React.MutableRefObject<HTMLTextAreaElement>}
-					postId={_id!}
-				/>
-				<Comment ref={commentRef} />
-				<CarouselModal />
-			</Paper>
-		</Suspense>
+				<MoreOptions postId={_id!} />
+			</Stack>
+			<Typography
+				variant='h5'
+				className='text-balance'
+				sx={{
+					lineHeight: 2,
+					marginInline: { xs: 1, sm: 2 },
+					marginBottom: { xs: 0, sm: 1 }
+				}}
+			>
+				{title}
+			</Typography>
+			<Stack
+				direction='row'
+				columnGap={1}
+				bgcolor='#efefef'
+			>
+				<PostGallery images={images as Image[]} />
+			</Stack>
+			<SubActions
+				inputRef={commentRef as React.MutableRefObject<HTMLTextAreaElement>}
+				postId={_id!}
+			/>
+			<Comment ref={commentRef} />
+			<CarouselModal />
+		</Paper>
 	)
 }
 

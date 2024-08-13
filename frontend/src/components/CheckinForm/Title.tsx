@@ -11,11 +11,11 @@ const Title: React.FC<Props> = ({ textareaRef, ...props }) => {
 	return (
 		<Box>
 			<Textarea
-				{...props}
 				placeholder='VD: Tụi mình lên kế hoạch đi Đà Lạt, và sau hơn 6 tháng chở đợi, cuối cùng 2 đứa đã có mặt tại Thái Lan 🇹🇭'
 				autoFocus
 				ref={textareaRef}
 				rows={7}
+				{...props}
 			/>
 		</Box>
 	)

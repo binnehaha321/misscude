@@ -7,8 +7,6 @@ import {
 	InputAdornment,
 	InputLabel,
 	OutlinedInput,
-	Paper,
-	Stack,
 	TextField,
 	Typography
 } from '@mui/material'
@@ -17,6 +15,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 
 import { IUser } from '@types'
 import { useSignIn } from '@hooks/useSignIn'
+import LinkRouter from '@components/common/LinkRouter'
 
 interface ErrorAuth {
 	name?: 'username' | 'password'
@@ -68,7 +67,7 @@ const SignIn = () => {
 			return
 		} else if (!value?.password?.trim()) {
 			if (passwordInputRef?.current) {
-				passwordInputRef?.current.focus()
+				passwordInputRef.current.focus()
 			}
 			setError({
 				name: 'password',
@@ -90,85 +89,83 @@ const SignIn = () => {
 	}, [value])
 
 	return (
-		<Stack
-			width='100dvw'
-			height='100dvh'
-			justifyContent='center'
-			alignItems='center'
-			bgcolor='#eee'
-		>
-			<Paper
-				elevation={4}
-				sx={{ p: 2, m: 'auto', width: 400 }}
+		<>
+			<Typography
+				variant='h5'
+				textAlign='center'
+				mb={2}
+				fontWeight={600}
 			>
-				<Typography
-					variant='h5'
-					textAlign='center'
-					mb={2}
-					fontWeight={600}
+				Đăng nhập
+			</Typography>
+			<Box
+				component='form'
+				noValidate
+				autoComplete='off'
+				display='flex'
+				flexDirection='column'
+				onSubmit={signIn}
+			>
+				<TextField
+					label='Tên tài khoản'
+					variant='outlined'
+					error={hasUsername}
+					required
+					helperText={hasUsername ? error?.text : ''}
+					autoFocus
+					sx={{ mb: 2 }}
+					onChange={handleChange}
+					value={value?.username}
+					name='username'
+					inputRef={usernameInputRef}
+				/>
+				<FormControl
+					sx={{ mb: 2 }}
+					variant='outlined'
+					error={hasPassword}
+					required
 				>
-					Đăng nhập
-				</Typography>
-				<Box
-					component='form'
-					noValidate
-					autoComplete='off'
-					display='flex'
-					flexDirection='column'
-					onSubmit={signIn}
-				>
-					<TextField
-						label='Tên tài khoản'
-						variant='outlined'
-						error={hasUsername}
+					<InputLabel>Mật khẩu</InputLabel>
+					<OutlinedInput
 						required
-						helperText={hasUsername ? error?.text : ''}
-						autoFocus
-						sx={{ mb: 2 }}
 						onChange={handleChange}
-						value={value?.username}
-						name='username'
-						inputRef={usernameInputRef}
+						value={value?.password}
+						name='password'
+						type={showPassword ? 'text' : 'password'}
+						endAdornment={
+							<InputAdornment position='end'>
+								<IconButton
+									aria-label='toggle password visibility'
+									onClick={onShowPassword}
+									edge='end'
+								>
+									{showPassword ? <VisibilityOff /> : <Visibility />}
+								</IconButton>
+							</InputAdornment>
+						}
+						label='Mật khẩu'
+						inputRef={passwordInputRef}
 					/>
-					<FormControl
-						sx={{ mb: 2 }}
-						variant='outlined'
-						error={hasPassword}
-						required
-					>
-						<InputLabel>Mật khẩu</InputLabel>
-						<OutlinedInput
-							required
-							onChange={handleChange}
-							value={value?.password}
-							name='password'
-							type={showPassword ? 'text' : 'password'}
-							endAdornment={
-								<InputAdornment position='end'>
-									<IconButton
-										aria-label='toggle password visibility'
-										onClick={onShowPassword}
-										edge='end'
-									>
-										{showPassword ? <VisibilityOff /> : <Visibility />}
-									</IconButton>
-								</InputAdornment>
-							}
-							label='Mật khẩu'
-							inputRef={passwordInputRef}
-						/>
-						{hasPassword && <FormHelperText>{error?.text}</FormHelperText>}
-					</FormControl>
-					<LoadingButton
-						variant='contained'
-						type='submit'
-						loading={isLoading}
-					>
-						Cho tui zô
-					</LoadingButton>
-				</Box>
-			</Paper>
-		</Stack>
+					{hasPassword && <FormHelperText>{error?.text}</FormHelperText>}
+				</FormControl>
+				<LinkRouter
+					to='/sign-up'
+					variant='body1'
+					fontWeight={400}
+					textAlign='right'
+					mb={1.5}
+				>
+					Tạo tài khoản
+				</LinkRouter>
+				<LoadingButton
+					variant='contained'
+					type='submit'
+					loading={isLoading}
+				>
+					Cho tui zô
+				</LoadingButton>
+			</Box>
+		</>
 	)
 }
 

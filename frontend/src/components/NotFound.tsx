@@ -4,15 +4,19 @@ import { Button, Stack, Typography } from '@mui/material'
 const NotFound = () => {
 	return (
 		<Stack
-			height='100dvh'
-			direction='column'
-			alignItems='center'
-			justifyContent='center'
-			rowGap={4}
+			sx={{
+				height: '100dvh',
+				flexDirection: 'column',
+				alignItems: 'center',
+				justifyContent: 'center',
+				rowGap: 3,
+				bgcolor: '#eee'
+			}}
 		>
 			<Typography
-				variant='h2'
+				sx={{ fontSize: { xs: 32, sm: 40, md: 60 } }}
 				fontWeight={700}
+				textAlign='center'
 			>
 				Đi lạc rồi babi 😏
 			</Typography>

@@ -11,13 +11,15 @@ const Comment = forwardRef<HTMLTextAreaElement, Props>((props, ref) => {
 
 	return (
 		<Box
-			border='1px solid #eee'
-			borderRadius={1}
-			bgcolor='#eee'
-			position='relative'
-			p={1}
-			m={3}
-			mt={0}
+			sx={{
+				border: '1px solid #eee',
+				borderRadius: 1,
+				bgcolor: '#eee',
+				position: 'relative',
+				margin: { xs: 1, sm: 2 },
+				marginTop: '0!important',
+				padding: 1
+			}}
 		>
 			<Suspense fallback={<p>Loading...</p>}>
 				<Textarea

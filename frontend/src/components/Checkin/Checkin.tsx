@@ -56,7 +56,7 @@ const Checkin = () => {
 	if (!posts?.length) return <NoData />
 
 	return (
-		<div className='min-h-dvh h-full'>
+		<>
 			<Stack
 				height='100%'
 				minHeight='100dvh'
@@ -65,7 +65,7 @@ const Checkin = () => {
 				py={!posts?.length ? 0 : 2}
 				direction='column'
 			>
-				{posts?.map((post, index) => (
+				{posts.map((post, index) => (
 					<Suspense
 						fallback={<SinglePostSkeleton />}
 						key={index}
@@ -75,7 +75,7 @@ const Checkin = () => {
 				))}
 			</Stack>
 			<div ref={lastPostRef} />
-		</div>
+		</>
 	)
 }
 export default Checkin

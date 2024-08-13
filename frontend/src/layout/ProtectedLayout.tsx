@@ -1,14 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
 import { localStore } from '@utils/localStorage'
+import { useApp } from '@context/AppContext'
+
 import Navbar from '@components/common/Navbar'
 import Menu from '@components/Menu/Menu'
 
 const ProtectedLayout = () => {
 	const accessToken = localStore.get('accessToken')
 	const navigate = useNavigate()
-	const [menuOpen, setMenuOpen] = useState(false)
+
+	const { openSidebar } = useApp()
 
 	useEffect(() => {
 		if (!accessToken) navigate('/sign-in')
@@ -16,11 +19,8 @@ const ProtectedLayout = () => {
 
 	return (
 		<>
-			<Navbar toggleOpenMenu={() => setMenuOpen(true)} />
-			<Menu
-				open={menuOpen}
-				onCloseMenu={() => setMenuOpen(false)}
-			/>
+			<Navbar toggleOpenMenu={openSidebar} />
+			<Menu />
 			<Outlet />
 		</>
 	)

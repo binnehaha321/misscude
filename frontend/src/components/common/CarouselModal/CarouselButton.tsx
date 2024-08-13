@@ -7,6 +7,16 @@ import CloseIcon from '@mui/icons-material/Close'
 const NextSlide: React.FC<BoxProps> = memo((props) => (
 	<Box {...props}>
 		<IconButton
+			sx={[
+				{
+					bgcolor: '#ddd'
+				},
+				{
+					'&:hover': {
+						bgcolor: '#ddd'
+					}
+				}
+			]}
 			size='large'
 			color='info'
 			aria-label='Ảnh sau'
@@ -19,6 +29,16 @@ const NextSlide: React.FC<BoxProps> = memo((props) => (
 const PrevSlide: React.FC<BoxProps> = memo((props) => (
 	<Box {...props}>
 		<IconButton
+			sx={[
+				{
+					bgcolor: '#ddd'
+				},
+				{
+					'&:hover': {
+						bgcolor: '#ddd'
+					}
+				}
+			]}
 			size='large'
 			color='info'
 			aria-label='Ảnh trước'

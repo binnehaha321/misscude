@@ -9,15 +9,19 @@ const NoData = () => {
 
 	return (
 		<Stack
-			direction='column'
-			justifyContent='center'
-			alignItems='center'
-			rowGap={3}
-			mt={3}
+			sx={{
+				height: 'calc(100dvh - 64px)',
+				flexDirection: 'column',
+				alignItems: 'center',
+				justifyContent: 'center',
+				rowGap: 3,
+				bgcolor: '#eee'
+			}}
 		>
 			<Typography
 				variant='h4'
 				fontWeight={600}
+				textAlign='center'
 			>
 				Buồn quá... chưa có post nào 😭
 			</Typography>
