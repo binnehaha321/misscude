@@ -1,4 +1,4 @@
 export const copyToClipboard = (str: string) => {
 	if (navigator?.clipboard?.writeText) return navigator.clipboard.writeText(str)
-	return Promise.reject(new Error('The Clipboard API is not available.'))
+	return Promise.reject('The Clipboard API is not available.')
 }

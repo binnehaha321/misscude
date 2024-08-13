@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { useParams } from 'react-router-dom'
 import { Box } from '@mui/material'
 
@@ -29,7 +30,9 @@ const Post = () => {
 			bgcolor='#eee'
 			minHeight='100dvh'
 		>
-			<SinglePost {...post} />
+			<Suspense fallback={<SinglePostSkeleton />}>
+				<SinglePost {...post} />
+			</Suspense>
 		</Box>
 	)
 }

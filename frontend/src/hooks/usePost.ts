@@ -113,11 +113,10 @@ export const useDeletePost = () => {
 
 			if (res.status === 200) {
 				const deletedPost = await res.data
-				console.log(deletePost)
+				openToast({ message: deletedPost?.message, status: 'success' })
 
 				// clear cache and refetch
 				await queryClient.invalidateQueries({ queryKey: ['posts'] })
-				openToast({ message: deletedPost?.data?.message, status: 'success' })
 				return { data: deletedPost, status: res.status }
 			}
 			openToast({
