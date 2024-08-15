@@ -1,12 +1,14 @@
 import { createTheme } from '@mui/material/styles'
+import { pinkPalette } from './palette'
 
 const theme = createTheme({
 	typography: {
 		fontFamily: ['Be Vietnam Pro', 'sans-serif'].join(','),
 		fontSize: 12
 	},
+	palette: pinkPalette,
 	components: {
-		MuiOutlinedInput: {
+		MuiInputBase: {
 			styleOverrides: {
 				input: ({ theme }) => ({
 					[theme.breakpoints.down('md')]: {
@@ -16,6 +18,13 @@ const theme = createTheme({
 						}
 					}
 				})
+			}
+		},
+		MuiIconButton: {
+			styleOverrides: {
+				root: {
+					color: pinkPalette.primary.main // Default color for all IconButtons
+				}
 			}
 		}
 	}

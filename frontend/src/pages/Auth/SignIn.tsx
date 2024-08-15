@@ -118,6 +118,14 @@ const SignIn = () => {
 					value={value?.username}
 					name='username'
 					inputRef={usernameInputRef}
+					InputProps={{
+						inputProps: {
+							autoCapitalize: 'none',
+							autoCorrect: 'off',
+							autoComplete: 'off',
+							spellCheck: 'false'
+						}
+					}}
 				/>
 				<FormControl
 					sx={{ mb: 2 }}

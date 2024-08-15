@@ -67,10 +67,7 @@ const MoreOptions = ({ postId }: { postId: string }) => {
 							key={index}
 							onClick={action}
 						>
-							<Icon
-								sx={{ mr: 1 }}
-								color='info'
-							/>
+							<Icon sx={{ mr: 1 }} />
 							{text}
 						</MenuItem>
 					)

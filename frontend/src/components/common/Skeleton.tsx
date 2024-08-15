@@ -7,7 +7,7 @@ const SinglePostSkeleton = () => {
 	return (
 		<div
 			className={cn(
-				'flex flex-col gap-y-3 w-full max-w-[680px] p-6 mx-auto',
+				'flex flex-col gap-y-3 w-full max-w-[680px] p-6 mx-auto mt-4',
 				effectParent
 			)}
 		>

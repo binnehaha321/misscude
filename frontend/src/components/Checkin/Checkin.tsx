@@ -1,5 +1,5 @@
 import { lazy, Suspense, useCallback, useRef } from 'react'
-import { Stack } from '@mui/material'
+import { Box, Stack } from '@mui/material'
 
 import { useAllPosts } from '@hooks/usePost'
 
@@ -45,9 +45,16 @@ const Checkin = () => {
 		[isLoading, fetchNextPage, hasNextPage, isFetchingNextPage]
 	)
 
-	if (isLoading) {
-		return <SinglePostSkeleton />
-	}
+	if (isLoading)
+		return (
+			<Box
+				py={3}
+				bgcolor='#eee'
+				minHeight='100dvh'
+			>
+				<SinglePostSkeleton />
+			</Box>
+		)
 
 	if (error) {
 		return <ErrorText text='Có lỗi xảy ra khi tải các chuyến đi' />
@@ -62,7 +69,6 @@ const Checkin = () => {
 				minHeight='100dvh'
 				bgcolor='#dcdcdc'
 				rowGap={2}
-				py={!posts?.length ? 0 : 2}
 				direction='column'
 			>
 				{posts.map((post, index) => (

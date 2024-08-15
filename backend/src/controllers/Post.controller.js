@@ -8,12 +8,10 @@ const createPost = async (req, res) => {
 	upload(req, res, async (err) => {
 		if (err instanceof multer.MulterError) {
 			if (err.code === 'LIMIT_UNEXPECTED_FILE') {
-				return res
-					.status(400)
-					.json({
-						text: `Một post chứa tối đa ${process.env.MAX_FILE_COUNT} ảnh`,
-						status: 400
-					})
+				return res.status(400).json({
+					text: `Một post chứa tối đa ${process.env.MAX_FILE_COUNT} ảnh`,
+					status: 400
+				})
 			}
 
 			return res

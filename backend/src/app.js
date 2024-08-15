@@ -26,18 +26,6 @@ const app = express()
 // cookieParser middleware
 app.use(cookieParser())
 app.use(cors(corsOptions))
-// app.use((req, res, next) => {
-// 	res.header('Access-Controll-Allow-Origin', '*')
-// 	res.header(
-// 		'Access-Controll-Allow-Methods',
-// 		'GET,HEAD,OPTIONS,POST,PUT,DELETE'
-// 	)
-// 	res.header(
-// 		'Access-Controll-Allow-Headers',
-// 		'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-// 	)
-// 	next()
-// })
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 const port = process.env.PORT || 4499

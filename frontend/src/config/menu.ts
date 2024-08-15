@@ -18,5 +18,5 @@ export const menuItems: IMenuItem[] = [
 		icon: ThumbUp,
 		path: '/me/favorites'
 	},
-	{ text: 'Custome ảnh', icon: Draw, path: '' }
+	{ text: 'Custom ảnh', icon: Draw, path: '' }
 ]

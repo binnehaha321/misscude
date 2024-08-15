@@ -50,7 +50,9 @@ httpRequest.interceptors.response.use(
 				error.config.headers.Authorization = `Bearer ${accessToken}`
 				return httpRequest.request(error.config)
 			} catch (error) {
-				console.log('interceptor error >>', error)
+				if (axios.isAxiosError(error)) {
+					console.log(error.cause?.message)
+				}
 				// Handle refresh token error or redirect to login
 				logout()
 			}

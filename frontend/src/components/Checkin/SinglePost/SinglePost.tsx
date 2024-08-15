@@ -27,6 +27,7 @@ const SinglePost: React.FC<ICheckinData> = ({
 				width: '100%',
 				maxWidth: 680,
 				mx: 'auto',
+				my: 2,
 				display: 'flex',
 				flexDirection: 'column'
 			}}

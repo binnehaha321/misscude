@@ -4,21 +4,18 @@ import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRound
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded'
 import CloseIcon from '@mui/icons-material/Close'
 
+import { pinkPalette } from '@config/palette'
+
 const NextSlide: React.FC<BoxProps> = memo((props) => (
 	<Box {...props}>
 		<IconButton
-			sx={[
-				{
-					bgcolor: '#ddd'
-				},
-				{
-					'&:hover': {
-						bgcolor: '#ddd'
-					}
+			sx={{
+				bgcolor: pinkPalette.background.default,
+				'&:hover': {
+					bgcolor: pinkPalette.primary.contrastText
 				}
-			]}
+			}}
 			size='large'
-			color='info'
 			aria-label='Ảnh sau'
 		>
 			<ArrowForwardIosRoundedIcon />
@@ -29,18 +26,13 @@ const NextSlide: React.FC<BoxProps> = memo((props) => (
 const PrevSlide: React.FC<BoxProps> = memo((props) => (
 	<Box {...props}>
 		<IconButton
-			sx={[
-				{
-					bgcolor: '#ddd'
-				},
-				{
-					'&:hover': {
-						bgcolor: '#ddd'
-					}
+			sx={{
+				bgcolor: pinkPalette.background.default,
+				'&:hover': {
+					bgcolor: pinkPalette.primary.contrastText
 				}
-			]}
+			}}
 			size='large'
-			color='info'
 			aria-label='Ảnh trước'
 		>
 			<ArrowBackIosNewRoundedIcon />
@@ -50,12 +42,11 @@ const PrevSlide: React.FC<BoxProps> = memo((props) => (
 
 const CloseSlide: React.FC<BoxProps> = memo((props) => (
 	<Box
+		bgcolor={pinkPalette.primary.contrastText}
 		{...props}
-		bgcolor='#d6d6d6'
 	>
 		<IconButton
 			size='large'
-			color='error'
 			aria-label='Đóng ảnh'
 		>
 			<CloseIcon />

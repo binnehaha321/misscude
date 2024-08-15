@@ -1,10 +1,12 @@
-import { Suspense } from 'react'
+import { lazy, Suspense } from 'react'
 import { useParams } from 'react-router-dom'
 import { Box } from '@mui/material'
 
 import { useSinglePost } from '@hooks/usePost'
 
-import { SinglePost } from '@components/Checkin/SinglePost'
+const SinglePost = lazy(
+	() => import('@components/Checkin/SinglePost/SinglePost')
+)
 import NotFound from '@components/NotFound'
 import { SinglePostSkeleton } from '@components/common/Skeleton'
 

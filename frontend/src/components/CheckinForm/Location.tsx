@@ -7,7 +7,6 @@ const Location = forwardRef<
 >((props, ref) => {
 	return (
 		<TextField
-			{...props}
 			ref={ref}
 			variant='standard'
 			label='Nơi checkin'
@@ -16,6 +15,7 @@ const Location = forwardRef<
 			sx={{ marginBottom: 2 }}
 			fullWidth
 			onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
+			{...props}
 		/>
 	)
 })
