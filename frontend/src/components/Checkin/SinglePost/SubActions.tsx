@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react'
+import { memo, useCallback, useMemo, useState } from 'react'
 import { Button, Stack } from '@mui/material'
 import CommentIcon from '@mui/icons-material/Comment'
 import ShareIcon from '@mui/icons-material/Share'
@@ -6,16 +6,29 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 
 import { copyToClipboard } from '@utils/copyToClipboard'
 import { useToast } from '@context/ToastContext'
+import { likePost, unLikePost } from '@data/post'
+import { parseJwt } from '@utils/parseJwt'
+import { useLocalStorage } from '@hooks/useLocalStorage'
 
 const SubActions = ({
 	inputRef,
-	postId
+	postId,
+	likeBy
 }: {
 	inputRef: React.MutableRefObject<HTMLTextAreaElement> | null
 	postId: string
+	likeBy?: string[]
 }) => {
+	const { getItem } = useLocalStorage()
 	const { openToast } = useToast()
-	const [like, setLike] = useState(false)
+	const userId = useMemo(() => {
+		const jwtToken = getItem('accessToken')
+		const parsedJwtToken = parseJwt(jwtToken)
+		const userId = parsedJwtToken._id
+		return userId
+	}, [])
+
+	const [like, setLike] = useState(likeBy?.includes(userId))
 
 	const focusComment = useCallback(() => {
 		if (!inputRef?.current) return
@@ -24,20 +37,30 @@ const SubActions = ({
 
 	const sharePost = useCallback(async () => {
 		const postLink = `${import.meta.env.VITE_HOSTNAME}/post/${postId}`
-		if (postId) {
-			await copyToClipboard(postLink)
-			openToast({
-				status: 'success',
-				message: 'Đã sao chép liên kết'
-			})
-		} else {
-			return
-		}
+		if (!postId) return
+
+		await copyToClipboard(postLink)
+		openToast({
+			status: 'success',
+			message: 'Đã sao chép liên kết'
+		})
 	}, [postId, openToast])
 
-	const likePost = () => {
-		setLike((isLike) => !isLike)
-	}
+	const handleLikePost = useCallback(async () => {
+		if (like) {
+			await unLikePost({
+				postId,
+				userId
+			})
+			setLike(false)
+		} else {
+			await likePost({
+				postId,
+				userId
+			})
+			setLike(true)
+		}
+	}, [postId])
 
 	return (
 		<Stack
@@ -54,7 +77,7 @@ const SubActions = ({
 			<Button
 				sx={{ width: '100%' }}
 				startIcon={<ThumbUpIcon />}
-				onClick={likePost}
+				onClick={handleLikePost}
 				color={like ? 'primary' : 'inherit'}
 			>
 				Mê nha

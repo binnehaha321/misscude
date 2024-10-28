@@ -16,6 +16,7 @@ export interface ICheckinData {
 	location: string
 	images: File[] | Image[]
 	createdBy: string
+	likeBy?: string[]
 }
 
 export interface IToastContent {

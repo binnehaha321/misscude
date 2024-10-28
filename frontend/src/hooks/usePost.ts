@@ -7,11 +7,12 @@ import {
 import axios from 'axios'
 
 import { ICheckinData } from '@types'
-import { getPostById, getPosts } from '@helpers/post'
+
 import httpRequest from '@config/httpRequest'
 import { useToast } from '@context/ToastContext'
 import { useAuth } from '@context/AuthContext'
 import { useScroll } from './useScroll'
+import { getPosts, getPostById } from '@data/post'
 
 export const useNewPost = () => {
 	const [isLoading, setIsLoading] = useState(false)

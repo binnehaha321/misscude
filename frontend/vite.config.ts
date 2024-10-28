@@ -17,7 +17,7 @@ export default defineConfig({
 			'@config': `${path.resolve(__dirname, './src/config')}`,
 			'@context': `${path.resolve(__dirname, './src/context')}`,
 			'@constants': `${path.resolve(__dirname, './src/constants/index.ts')}`,
-			'@helpers': `${path.resolve(__dirname, './src/helpers')}`,
+			'@data': `${path.resolve(__dirname, './src/data')}`,
 			'@assets': `${path.resolve(__dirname, './src/assets')}`
 		}
 	},

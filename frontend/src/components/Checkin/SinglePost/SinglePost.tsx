@@ -16,7 +16,8 @@ const SinglePost: React.FC<ICheckinData> = ({
 	location,
 	title,
 	images,
-	_id
+	_id,
+	likeBy
 }) => {
 	const commentRef = useRef<HTMLTextAreaElement | null>(null)
 
@@ -82,6 +83,7 @@ const SinglePost: React.FC<ICheckinData> = ({
 			<SubActions
 				inputRef={commentRef as React.MutableRefObject<HTMLTextAreaElement>}
 				postId={_id!}
+				likeBy={likeBy}
 			/>
 			<Comment ref={commentRef} />
 			<CarouselModal />
