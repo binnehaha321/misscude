@@ -23,6 +23,11 @@ const postSchema = new Schema(
 		createdBy: {
 			type: String,
 			required: [true, 'Vui lòng nhập tên người đăng bài']
+		},
+		likeBy: {
+			type: [mongoose.Schema.Types.ObjectId],
+			ref: 'User',
+			default: []
 		}
 	},
 	{

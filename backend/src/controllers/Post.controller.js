@@ -138,10 +138,52 @@ const deletePost = async (req, res) => {
 	}
 }
 
+const likePost = async (req, res) => {
+	const { postId, userId } = req.body
+
+	try {
+		const selectedPost = await PostModel.findById(postId)
+
+		if (!selectedPost) {
+			return res
+				.status(404)
+				.json({ message: 'Không tìm thấy post', status: 404 })
+		}
+
+		await PostModel.findByIdAndUpdate(postId, { $addToSet: { likeBy: userId } });
+
+		return res.status(200).json({ message: 'Đã thích bài viết', status: 200 })
+	} catch (err) {
+		return res.status(500).json({ message: err.message, status: 500 })
+	}
+}
+
+const unLikePost = async (req, res) => {
+	const { postId, userId } = req.body
+
+	try {
+		const selectedPost = await PostModel.findById(postId)
+
+		if (!selectedPost) {
+			return res
+				.status(404)
+				.json({ message: 'Không tìm thấy post', status: 404 })
+		}
+
+		await PostModel.findByIdAndUpdate(postId, { $pull: { likeBy: userId } });
+
+		return res.status(200).json({ message: 'Đã bỏ thích bài viết', status: 200 })
+	} catch (err) {
+		return res.status(500).json({ message: err.message, status: 500 })
+	}
+}
+
 module.exports = {
 	createPost,
 	getPosts,
 	getPostById,
 	updatePost,
-	deletePost
+	deletePost,
+	likePost,
+	unLikePost
 }

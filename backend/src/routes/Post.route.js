@@ -5,12 +5,16 @@ const {
 	getPosts,
 	getPostById,
 	deletePost,
-	updatePost
+	updatePost,
+	likePost,
+	unLikePost
 } = require('../controllers/Post.controller')
 
 const router = express.Router()
 
 router.post('/', createPost)
+router.post('/like', likePost)
+router.post('/unlike', unLikePost)
 router.get('/', getPosts)
 router.get('/:id', getPostById)
 router.delete('/:id', deletePost)
