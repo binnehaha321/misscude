@@ -1,6 +1,6 @@
-const express = require('express')
+import express from 'express'
 
-const {
+import {
 	createPost,
 	getPosts,
 	getPostById,
@@ -8,7 +8,7 @@ const {
 	updatePost,
 	likePost,
 	unLikePost
-} = require('../controllers/Post.controller')
+} from '../controllers/Post.controller.js'
 
 const router = express.Router()
 
@@ -20,4 +20,4 @@ router.get('/:id', getPostById)
 router.delete('/:id', deletePost)
 router.put('/:id', updatePost)
 
-module.exports = router
+export default router

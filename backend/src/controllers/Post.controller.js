@@ -1,8 +1,8 @@
-const multer = require('multer')
-const cloudinary = require('../config/cloudinary')
-const PostModel = require('../models/Post.model')
-const { upload } = require('../middleware/storage')
-const { getPublicId } = require('../lib/utils')
+import multer from 'multer'
+import cloudinary from '../config/cloudinary.js'
+import PostModel from '../models/Post.model.js'
+import { upload } from '../middleware/storage.js'
+import { getPublicId } from '../lib/utils.js'
 
 const createPost = async (req, res) => {
 	upload(req, res, async (err) => {
@@ -180,7 +180,7 @@ const unLikePost = async (req, res) => {
 	}
 }
 
-module.exports = {
+export {
 	createPost,
 	getPosts,
 	getPostById,

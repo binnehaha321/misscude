@@ -1,9 +1,9 @@
-const express = require('express')
-const { signIn, verifyRefreshToken } = require('../controllers/Auth.controller')
+import express from 'express'
+import { signIn, verifyRefreshToken } from '../controllers/Auth.controller.js'
 
 const router = express.Router()
 
 router.post('/sign-in', signIn)
 router.post('/verify-refresh-token', verifyRefreshToken)
 
-module.exports = router
+export default router

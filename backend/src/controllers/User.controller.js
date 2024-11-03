@@ -1,11 +1,8 @@
-const bcrypt = require('bcrypt')
-const {
-	isExistUsername,
-	isExistEmail
-} = require('../middleware/User.middleware')
-const UserModel = require('../models/User.model')
+import bcrypt from 'bcrypt'
+import { isExistUsername, isExistEmail } from '../middleware/User.middleware.js'
+import UserModel from '../models/User.model.js'
 
-const createUser = async (req, res) => {
+export const createUser = async (req, res) => {
 	const { email, username, password, avatar } = req.body
 
 	try {
@@ -39,8 +36,4 @@ const createUser = async (req, res) => {
 		console.error(error)
 		return res.status(500).json({ message: 'Error ' + JSON.stringify(error) })
 	}
-}
-
-module.exports = {
-	createUser
 }

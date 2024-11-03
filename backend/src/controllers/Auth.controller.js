@@ -1,9 +1,9 @@
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 
-const UserModel = require('../models/User.model')
-const { generateTokens } = require('../middleware/User.middleware')
-const { setCookie } = require('../lib/utils')
+import UserModel from '../models/User.model.js'
+import { generateTokens } from '../middleware/User.middleware.js'
+import { setCookie } from '../lib/utils.js'
 
 const signIn = async (req, res) => {
 	const { username, password } = req.body
@@ -71,7 +71,4 @@ const verifyRefreshToken = async (req, res, next) => {
 	}
 }
 
-module.exports = {
-	signIn,
-	verifyRefreshToken
-}
+export { signIn, verifyRefreshToken }

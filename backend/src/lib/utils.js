@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken')
+import jwt from 'jsonwebtoken'
 
-const setCookie = (res, refreshToken) => {
+export const setCookie = (res, refreshToken) => {
 	res.cookie('refreshToken', refreshToken, {
 		path: '/',
 		httpOnly: true,
@@ -10,7 +10,7 @@ const setCookie = (res, refreshToken) => {
 	})
 }
 
-const verify = {
+export const verify = {
 	accessToken: (payload) => {
 		return jwt.sign(payload, process.env.ACCESS_TOKEN_PRIVATE_KEY, {
 			expiresIn: process.env.ACCESS_TOKEN_EXPIRED
@@ -23,14 +23,8 @@ const verify = {
 	}
 }
 
-const getPublicId = (url) => {
+export const getPublicId = (url) => {
 	const regex = /.*\/upload\/v\d+\/(?:[^/]+\/)*([^/.]+)\.[^.]+/
 	const match = url.match(regex)
 	return match ? match[1] : null
-}
-
-module.exports = {
-	setCookie,
-	verify,
-	getPublicId
 }

@@ -1,7 +1,7 @@
-const User = require('../models/User.model')
-const { verify } = require('../lib/utils')
+import User from '../models/User.model.js'
+import { verify } from '../lib/utils.js'
 
-exports.generateTokens = async (res, user) => {
+export const generateTokens = async (res, user) => {
 	try {
 		const payload = {
 			_id: user._id,
@@ -19,12 +19,12 @@ exports.generateTokens = async (res, user) => {
 	}
 }
 
-exports.isExistUsername = async (username) => {
+export const isExistUsername = async (username) => {
 	const existedUsername = await User.findOne({ username })
 	return existedUsername
 }
 
-exports.isExistEmail = async (email) => {
+export const isExistEmail = async (email) => {
 	const existedEmail = await User.findOne({ email })
 	return existedEmail
 }
