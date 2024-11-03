@@ -67,7 +67,7 @@ const getPosts = async (req, res) => {
 		const posts = await PostModel.find()
 			.limit(LIMIT)
 			.skip((+page - 1) * LIMIT)
-			.sort({ date: -1, updatedAt: -1 })
+			.sort({ date: -1 })
 		return res.status(200).json(posts)
 	} catch (err) {
 		return res.status(500).json({ message: err.message })
@@ -150,7 +150,7 @@ const likePost = async (req, res) => {
 				.json({ message: 'Không tìm thấy post', status: 404 })
 		}
 
-		await PostModel.findByIdAndUpdate(postId, { $addToSet: { likeBy: userId } });
+		await PostModel.findByIdAndUpdate(postId, { $addToSet: { likeBy: userId } })
 
 		return res.status(200).json({ message: 'Đã thích bài viết', status: 200 })
 	} catch (err) {
@@ -170,9 +170,11 @@ const unLikePost = async (req, res) => {
 				.json({ message: 'Không tìm thấy post', status: 404 })
 		}
 
-		await PostModel.findByIdAndUpdate(postId, { $pull: { likeBy: userId } });
+		await PostModel.findByIdAndUpdate(postId, { $pull: { likeBy: userId } })
 
-		return res.status(200).json({ message: 'Đã bỏ thích bài viết', status: 200 })
+		return res
+			.status(200)
+			.json({ message: 'Đã bỏ thích bài viết', status: 200 })
 	} catch (err) {
 		return res.status(500).json({ message: err.message, status: 500 })
 	}
