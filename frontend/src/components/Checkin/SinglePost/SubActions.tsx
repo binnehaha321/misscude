@@ -4,11 +4,11 @@ import CommentIcon from '@mui/icons-material/Comment'
 import ShareIcon from '@mui/icons-material/Share'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 
+import { useLocalStorage } from '@hooks/useLocalStorage'
 import { copyToClipboard } from '@utils/copyToClipboard'
+import { parseJwt } from '@utils/parseJwt'
 import { useToast } from '@context/ToastContext'
 import { likePost, unLikePost } from '@data/post'
-import { parseJwt } from '@utils/parseJwt'
-import { useLocalStorage } from '@hooks/useLocalStorage'
 
 const SubActions = ({
 	inputRef,
@@ -24,21 +24,22 @@ const SubActions = ({
 	const userId = useMemo(() => {
 		const jwtToken = getItem('accessToken')
 		const parsedJwtToken = parseJwt(jwtToken)
-		const userId = parsedJwtToken._id
-		return userId
-	}, [])
+		return parsedJwtToken._id
+	}, [getItem])
 
-	const [like, setLike] = useState(likeBy?.includes(userId))
+	const [like, setLike] = useState({
+		postId,
+		liked: likeBy?.includes(userId) || false
+	})
 
 	const focusComment = useCallback(() => {
-		if (!inputRef?.current) return
-		inputRef.current.focus()
+		inputRef?.current?.focus()
 	}, [inputRef])
 
 	const sharePost = useCallback(async () => {
-		const postLink = `${import.meta.env.VITE_HOSTNAME}/post/${postId}`
 		if (!postId) return
 
+		const postLink = `${import.meta.env.VITE_HOSTNAME}/post/${postId}`
 		await copyToClipboard(postLink)
 		openToast({
 			status: 'success',
@@ -47,20 +48,10 @@ const SubActions = ({
 	}, [postId, openToast])
 
 	const handleLikePost = useCallback(async () => {
-		if (like) {
-			await unLikePost({
-				postId,
-				userId
-			})
-			setLike(false)
-		} else {
-			await likePost({
-				postId,
-				userId
-			})
-			setLike(true)
-		}
-	}, [postId])
+		const updatedLikeStatus = !like.liked
+		setLike((prevPost) => ({ ...prevPost, liked: updatedLikeStatus }))
+		await (updatedLikeStatus ? likePost : unLikePost)({ postId, userId })
+	}, [postId, userId, like.liked])
 
 	return (
 		<Stack
@@ -78,7 +69,7 @@ const SubActions = ({
 				sx={{ width: '100%' }}
 				startIcon={<ThumbUpIcon />}
 				onClick={handleLikePost}
-				color={like ? 'primary' : 'inherit'}
+				color={like.liked ? 'primary' : 'inherit'}
 			>
 				Mê nha
 			</Button>

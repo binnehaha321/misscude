@@ -5,6 +5,7 @@ import { ICheckinData, Image } from '@types'
 import { formatDate } from '@utils/date'
 
 import { CarouselModal } from '@common/CarouselModal'
+const CountLike = lazy(() => import('./CountLike'))
 const PostGallery = lazy(() => import('../PostGallery/PostGallery'))
 const SubActions = lazy(() => import('./SubActions'))
 const Comment = lazy(() => import('./Comment'))
@@ -80,6 +81,7 @@ const SinglePost: React.FC<ICheckinData> = ({
 			>
 				<PostGallery images={images as Image[]} />
 			</Stack>
+			<CountLike likeBy={likeBy} />
 			<SubActions
 				inputRef={commentRef as React.MutableRefObject<HTMLTextAreaElement>}
 				postId={_id!}

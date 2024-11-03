@@ -27,7 +27,7 @@ const MoreOptions = ({ postId }: { postId: string }) => {
 				text: 'Xem post',
 				icon: InfoIcon,
 				action: () => navigate(`/post/${postId}`),
-				hidden: postId !== myId
+				hidden: false
 			},
 			{
 				text: 'Chỉnh sửa',
@@ -39,7 +39,7 @@ const MoreOptions = ({ postId }: { postId: string }) => {
 				text: 'Xóa post',
 				icon: DeleteIcon,
 				action: () => navigate(`/post/${postId}/delete`),
-				hidden: false
+				hidden: postId !== myId
 			}
 		],
 		[navigate, postId]
